@@ -1,0 +1,548 @@
+
+h1.payRightH1,h2.payRightH2,h3.payRightH3,h4.payRightH4,h5.payRightH5,h6.payRightH6, p.payRightPayment{
+	font-family: 'Roboto', sans-serif;
+	color: #275f95;
+}
+
+/*
+@media screen and (max-width: 780px) {
+	.circleArrow h2.payRightH2 span.installments {
+
+	font-size: 20px;
+	/*font-weight: 700;
+	/*line-height: 30px;*/
+/*	}
+	h2.payRightH2{
+		font-size:12px;
+
+	}
+}
+@media screen and (min-width: 990px) {
+	.circleArrow h2.payRightH2 span.installments {
+		
+		font-weight: 700;
+		line-height: 30px;
+	}
+
+	/*.circleArrow *//*h2.payRightH2{
+		font-size:12px;
+
+	}
+}*/
+
+
+
+h1.payRightH1 {
+	font-size: 54px;
+	line-height: 60px;
+	text-transform: uppercase;
+	font-weight: 400;
+	color: #4e84b5;
+}
+h2.payRightH2 {
+	font-size: 20px;
+	margin: 0px; 	/*25px 0 35px;*/
+	text-align: center;
+	font-weight: 500;
+	
+}
+/*new*/
+header{
+	padding: 40px 0;
+}
+#merchantname{
+	text-align: right;
+	
+}
+
+#payrightmargin {
+	text-align: left;
+	padding-top:0px;
+	padding-bottom: 10px;
+
+}
+#payrightdeposit{
+	text-align: left;
+	line-height: 27px;
+}
+.payRight_columns.installments{
+	margin-left: 0px;
+}
+
+h2.modal {
+	font-size: 20px;
+	margin: 0px; 	/*25px 0 35px;*/
+	text-align: center;
+	font-weight: 500;
+	
+}
+h4.payRightH4 {
+	font-size: 22px;
+	text-align: center;
+}
+h5.payRightH5 {
+	font-weight: 900;
+	font-size: 18px;
+}
+p.payRightPayment {
+	font-size: 12px;
+	text-align: center;
+	color: #666;
+	margin-bottom: 0px;
+	margin-top: 0;
+}
+
+a {
+	color: #275f95;
+}
+button {
+	background-color: #275f95;
+	color: #ffffff;
+	font-size: 28px;
+	width: 100%;
+	text-align: center;
+	padding: 10px; 
+}
+
+.circleArrow  {
+	/*background: url('../../images/Circle-Arrowx.png');
+	background-size: cover;
+	padding: 55px 0;*/
+	text-align: center;
+
+	position: relative;
+	cursor: pointer;
+	padding-bottom: 0px;
+
+	
+}
+.circleArrow  h2.payRightH2 {
+	color: #fff;
+	
+	line-height: 0px;
+
+	display: inline-block;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);  /* tweak for precise centering; details:*/  
+}
+
+.payRightimg   {
+	width: 300px !important; 
+	/*vertical-align: middle !important;
+    margin: -2px 0 0 .5em !important;
+    padding: 0 !important;
+    position: relative !important;
+    box-shadow: none !important;*/
+}
+.circleArrow h2.payRightH2 span.installments {
+	
+	font-weight: 700;
+	line-height: 30px;
+}
+
+
+span.installments {
+
+	color:#fff;
+}
+/*header {
+	padding: 40px 0;
+}*/
+
+.payRight_container {
+	width: auto;
+	margin: auto;
+	background-color: white;
+}
+
+h4.payRightH4.op2 {
+    font-size: 22px;
+    line-height: 22px;
+    text-align: center;
+    font-weight: 700;
+}
+
+p.payRightp {
+	font-size: 18px;
+	text-align: center;
+	/*new*/
+	     margin-bottom: 5px; 
+}
+/*new*/
+button.payrightbutton {
+    background-color: #275f95;
+    color: #ffffff;
+    font-size: 28px;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    text-transform: none;
+    border-color: white;
+    margin-bottom: 15px;
+    margin-top: 10px;
+    line-height: normal;
+    font-weight: 700;
+}
+
+
+
+a {
+	color: #275f95;
+	text-decoration:underline;
+}
+button {
+	background-color: #275f95;
+	color: #ffffff;
+	font-size: 28px;
+	width: 100%;
+	text-align: center;
+	padding: 10px; 
+}
+
+/*header {
+	padding: 40px 0;
+}*/
+
+.bodybox {
+	margin: 0px;
+}
+.payRight_container_cart {
+    max-width: 600px;
+    width: auto;
+    margin: auto;
+    margin-left: 0px;
+    padding: 0 0 22px 0px;
+    line-height: 27px;
+}
+
+.payRight_container {
+	/*max-width:600px;*/
+	width: auto;
+	margin: auto;
+}
+
+.payRight_blueStrip {
+	background-color: #275f95;
+	padding-bottom: 30px;
+}
+.payRight_blueStrip h2, .payRight_blueStrip p {
+	color: #ffffff;
+}
+.payRight_blueStrip p {
+	text-align: left;
+}
+.numC {
+	font-size: 30px;
+	background-color: #ffffff;
+	color: #275f95;
+	border-radius: 50px;
+	float: left;
+	padding: 5px 18px;
+	margin-right: 10px;
+	font-weight: bold;
+}
+
+.payRight_points p {
+	font-weight: 500;
+	font-size: 22px;
+	line-height: 28px;
+}
+.payRight_points {
+	margin: 30px 0 30px 0 !important;
+}
+.pointsCenter {
+	border-left: 2px solid #b2b3b6;
+	border-right: 2px solid #b2b3b6;
+}
+
+.info {
+	background-color: #b2b3b6;
+	margin-bottom: 30px !important;
+}
+.info p {
+	color: #ffffff;
+	text-align: left;
+	font-size: 16px;
+}
+
+
+
+@media only screen and (max-width: 770px) {
+
+	.circleArrow h2.payRightH2 {
+    line-height: 15px;
+    font-size: 15px;
+}
+
+	.circleArrow h2.payRightH2 span.installments {
+	
+	font-weight: 700;
+	line-height: 30px;
+	font-size:40px;
+}
+	 h1.payRightH1{
+		text-align: center;
+		font-size: 36px;
+		
+	}
+	 h2.payRightH2 {
+		text-align: center;
+		font-size: 20px;
+		line-height: 20px;
+		    padding-bottom: 20px;
+    padding-top: 20px;
+	}
+	h2.payRightH2.modal{
+		text-align: center;
+		font-size: 20px;
+		padding-bottom: 20px;
+		
+	}
+
+
+	p.payRightPayment {
+		font-size: 12px;
+		line-height: 18px;
+		margin-top: 0px;
+		margin-bottom: 0px;
+	}
+	br {
+		display: inline !important;
+	}
+	button {
+		font-size: 22px;
+	}
+	.imgCol {
+		text-align: center;
+	}
+	 .imgCol  img{
+		width: 40%;
+	}
+	.PointsInBlueStrip {
+		padding-left: 15%;
+	}
+	.pointsCenter {
+		border-left: 0px solid #b2b3b6;
+		border-right: 0px solid #b2b3b6;
+		border-top: 2px solid #b2b3b6;
+		border-bottom: 2px solid #b2b3b6;
+	}
+	.info p {
+		font-size: 12px;
+		line-height: 18px;
+	}
+
+	#merchantname{
+		text-align: center;
+	}
+
+}
+
+@media only screen and (min-width: 771px) {
+	.bodybox {
+		padding: 0 40px 0 40px;
+	}
+
+	 h2.payRightH2 {
+		text-align: center;
+		padding-bottom: 0px;
+		padding-bottom: 20px;
+    	padding-top: 20px;
+	}
+
+	h2.payRightH2.hpw {
+		padding-bottom: 20px;
+		/*new*/
+		font-size: 32px;
+	    margin: 25px 0 35px;
+	    text-align: center;
+	}
+	.circleArrow h2.payRightH2 span.installments {
+	
+	font-weight: 700;
+	line-height: 0px;
+	font-size:24px;
+}
+
+.circleArrow h2.payRightH2{
+	line-height: 20px;
+	font-size: 16px;
+	transform: translate(-50%, -34%); 
+}
+
+h2.payRightH2.modal{
+		text-align: center;
+		font-size: 20px;
+		padding-bottom: 20px;
+		
+	}
+
+}
+
+@media screen and (max-width: 768px) {
+
+	img.payRightimg {
+    height: auto;
+    max-width: 25%;
+		}
+
+	}
+
+	a.tellmemore {
+		color: white;
+		text-decoration-line: none;
+	}
+
+
+/*from main2 */
+
+.payRight_blueStrip2 {
+	background-color: #275f95;
+	padding-bottom: 30px;
+}
+.payRight_blueStrip2 h2, .payRight_blueStrip2 p {
+	color: #ffffff;
+}
+.payRight_blueStrip2 p {
+	text-align: center !important;
+	font-weight: 300;
+	font-size: 22px;
+}
+.payRight_blueStrip2 .insideColumns {
+	text-align: center !important;
+	padding-bottom: 30px;
+}
+.payRight_blueStrip2 {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+.payRight_blueStrip2 img {
+	text-align: center;
+	width: 50%;
+	margin-bottom: 14px;
+}
+
+.payRight_blueStrip2 .payRight_topleft2 {
+	border-right: 1px solid #fff;
+	border-bottom: 1px solid #fff;
+}
+.payRight_blueStrip2 .payRight_bottomright2 {
+	border-left: 1px solid #fff;
+	border-top: 1px solid #fff;
+	margin-top: -1px;
+}
+.payRight_blueStripBottom2 {
+	margin-bottom: 30px !important;
+	padding: 0 80px 30px 80px;
+}
+.payRight_blueStripTop2 {
+	padding: 30px 80px 0px 80px;
+}
+.numC {
+	font-size: 30px;
+	background-color: #ffffff;
+	color: #275f95;
+	border-radius: 50px;
+	float: left;
+	padding: 5px 18px;
+	margin-right: 10px;
+	font-weight: bold;
+}
+
+/*.payRight_points p {
+	font-weight: 900;
+	font-size: 22px;
+	line-height: 28px;
+}*/
+/*.payRight_points {
+	margin: 30px 0 30px 0 !important;
+}*/
+/*.pointsCenter {
+	border-left: 2px solid #b2b3b6;
+	border-right: 2px solid #b2b3b6;
+}
+*/
+.info2 {
+	background-color: #b2b3b6;
+	margin-bottom: 30px !important;
+}
+.info2 p {
+	color: #ffffff;
+	text-align: left;
+	font-size: 16px;
+}
+
+@media only screen and (max-width: 770px) {
+
+	.headerLast {
+		height: 0px;
+	}
+	.imgPayRight {
+		text-align: center;
+	}
+	.imgPayRight img {
+		width: 60%;
+	}
+	.payRight_blueStrip2 img {
+		width: 80%;
+	}
+	.payRight_blueStrip2 .payRight_topleft2 {
+		border-right: 0px solid #fff;
+		border-bottom: 0px solid #fff;
+	}
+	.payRight_blueStrip2 .payRight_bottomright2 {
+		border-left: 0px solid #fff;
+		border-top: 0px solid #fff;
+		margin-top: 0px;
+	}
+	.payRight_blueStripBottom2 {
+		margin-bottom: 30px !important;
+		padding: 0 30px 30px 30px;
+	}
+	.payRight_blueStripTop2 {
+		padding: 30px 30px 0px 30px;
+	}
+	.payRight_blueStrip2 .insideColumns {
+		border-bottom: 1px solid #ffffff;
+	}
+	.payRight_blueStrip2 .payRight_bottomright2 {
+		border-bottom: 0px solid #fff;
+	}
+	.info2 p {
+		font-size: 12px !important;
+		line-height: 14px;
+	}
+
+}
+
+
+
+
+
+/*img.circleArrow  {
+		width: 300px;
+	}*/
+	/*#payrightmargin{
+		margin-top: -40px;
+	}
+*/
+	/*#payrightdeposit{
+		margin-top:0;
+	}
+}*/
+
+/*@media only screen and (max-width: 715px) {
+	.insideColumns {
+		display: none;	
+	}*/
+
+/*@media screen and (min-width: 769px), print{
+
+}*/
+/*h2.circleArrow h2.payRightH2.payrightH2{
+
+	font-size:32px;
+}*/
+

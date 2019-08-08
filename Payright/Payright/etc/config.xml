@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../Store/etc/config.xsd">
+    <default>
+        <payment>
+                <mypayright>
+                    <fixed_country>Australia</fixed_country>
+                    <instructions_data>Enjoy Now, Pay Later</instructions_data>
+                    <payrightshowpricecategory>0</payrightshowpricecategory>
+                    <minicart>0</minicart>
+                    <modaloption>ModalOptionOne</modaloption>
+                <active>1</active>
+                <title>Payright - Buy Now Pay Later </title>
+                <order_status>pending_payment</order_status>
+                <payment_action>true</payment_action>
+                <model>Payright\Payright\Model\MyPayright</model>
+                <helpers>
+                <wsdlintegration>
+                        <class>Example_Wsdlintegration_Helper</class>
+                </wsdlintegration>
+                </helpers>
+                <group>offline</group>
+            </mypayright>
+            <!-- payment-config -->
+        </payment>
+    </default>
+</config>
+

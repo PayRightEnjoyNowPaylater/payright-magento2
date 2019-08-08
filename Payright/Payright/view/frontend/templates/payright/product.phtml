@@ -1,0 +1,52 @@
+<?php
+/**
+ * Magento 2 extensions for Payright Payment
+ *
+ * @author Payright
+ * @copyright 2016-2018 Payright https://www.payright.com.au
+ */
+// echo $block->sayHello();
+
+// ini_set("display_errors", "0");
+
+
+
+if($block->IsProductPageInstallmentTextActive() == "1")
+{
+
+
+
+$getInstallmentData = $block->getInstallmentsAmount();
+
+
+// $option = $block->getmodal();
+// if ($option == "ModalOptionOne"){
+// 	$class = "payright-modal-popup-trigger";
+// }
+// else{
+// 	$class = "payright-modal-popup-trigger2";
+// }
+
+ 
+// echo "<pre>";
+// 	print_r($getInstallmentData);
+// echo "</pre>";
+// echo "<pre>";
+// 	print_r($block->getInstallmentsAmount());
+// echo "</pre>";
+
+
+if ($getInstallmentData != 'exceed_amount' && $getInstallmentData != 'APIError') {
+	?>
+	Or <strong><?php echo $getInstallmentData['noofrepayments']; ?></strong> <?php echo $getInstallmentData['repaymentfrequency'] ?> payments of $ 
+	<strong><?php echo $getInstallmentData['LoanAmountPerPayment'];?></strong>  with <span class="payright-logo"><img></span>
+	 <a href="#" class="payright-modal-popup-trigger">Info</a>
+
+
+<?php
+}
+
+}
+?>
+
+

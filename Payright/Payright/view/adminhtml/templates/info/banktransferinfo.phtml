@@ -1,0 +1,26 @@
+<?php
+use Magento\OfflinePayments\Model\Banktransfer;
+use Payright\Payright\Model\Config\EnjoynowPaylater as PayrightConfig;
+use \Magento\Quote\Model\QuoteRepository as QuoteRepository;
+
+$payment = $block->getOrder()->getPayment();
+$method = $payment->getMethodInstance()->getCode();
+$_order = $block->getOrder();
+
+// $quoteRepository = \Magento\Quote\Model\QuoteRepository::getInstance();
+
+// $quote = $block->getOrder()->getPayment();
+// $paymentQuote = $quote->getPayment();
+
+
+// var_dump($paymentQuote);
+
+?>
+<?php if ($method == PayrightConfig::METHOD_CODE) :?>
+<div class="admin__page-section-item-content">
+    <strong><?php echo __('Payright Plan ID:') ?></strong>
+    <span class="price"><?php echo $_order->getpayrightplanname(); ?></span>                        
+</div>
+<?php endif; ?>
+
+

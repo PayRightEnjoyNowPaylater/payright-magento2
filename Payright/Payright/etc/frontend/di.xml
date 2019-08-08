@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento 2 extensions for PayRight Payment
+ *
+ * @author PayRight
+ * @copyright 2016-2018 PayRight https://www.payright.com.au
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="afterpay" xsi:type="object">Payright\Payright\Model\ConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+
+     <type name="Magento\Catalog\Block\Product\ListProduct">
+    <plugin name="block-product-list" type="Payright\Payright\Plugin\ProductList"/>
+	</type>
+     <type name="Magento\Catalog\Block\Product\ProductList\Related">
+    <plugin name="block-product-related" type="Payright\Payright\Plugin\RelatedProducts"/>
+    </type>
+     <type name="Magento\Catalog\Block\Product\ProductList\Upsell">
+    <plugin name="block-product-upsell" type="Payright\Payright\Plugin\UpsellProducts"/>
+    </type>
+     <type name="Magento\Checkout\Block\Cart\Crosssell">
+    <plugin name="block-product-crosssell" type="Payright\Payright\Plugin\CrosssellProducts"/>
+    </type>
+     <type name="Magento\CatalogWidget\Block\Product\ProductsList">
+    <plugin name="block-product-bestseller" type="Payright\Payright\Plugin\Bestsellerdproducts"/>
+    </type>
+    <type name="Magento\Checkout\CustomerData\Cart">
+        <plugin name="extra_data" type="Payright\Payright\Plugin\Minicartrepayment"/>
+    </type>
+
+    
+
+</config>
+

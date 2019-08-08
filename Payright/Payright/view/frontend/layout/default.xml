@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<page>
+   <body>
+        <referenceBlock name="head.additional">
+            <block template="head.phtml" class="Payright\Payright\Block\Head" name="payright_payright_block_head" />
+        </referenceBlock>
+   </body>
+</page>

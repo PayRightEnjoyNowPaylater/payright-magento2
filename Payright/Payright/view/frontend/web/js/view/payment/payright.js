@@ -16,8 +16,8 @@ define(
         'use strict';
         rendererList.push(
             {
-                type: 'mypayright',
-                component: 'Payright_Payright/js/view/payment/method-renderer/mypayright-method'
+                type: 'payright',
+                component: 'Payright_Payright/js/view/payment/method-renderer/payright-method'
             }
         );
         /** Add view logic here if needed */

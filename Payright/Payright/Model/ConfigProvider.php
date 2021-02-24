@@ -5,27 +5,28 @@
  * @author PayRight
  * @copyright 2016-2018 PayRight https://www.payright.com.au
  */
+
 namespace Payright\Payright\Model;
 
 use Magento\Checkout\Model\ConfigProviderInterface;
 
 /**
  * Class ConfigProvider
+ *
  * @package PayRight\PayRight\Model
  */
-class ConfigProvider implements ConfigProviderInterface
-{
+class ConfigProvider implements ConfigProviderInterface {
     /**
-     * @var Config\Payovertime
+     * @var Config\Payright
      */
     protected $payrightConfig;
 
     /**
      * ConfigProvider constructor.
-     * @param Config\Payovertime $config
+     *
+     * @param Config\Payright $config
      */
-    public function __construct(\Payright\Payright\Model\Config\EnjoynowPaylater $config)
-    {
+    public function __construct(\Payright\Payright\Model\Config\Payright $config) {
         $this->payrightConfig = $config;
     }
 
@@ -34,8 +35,7 @@ class ConfigProvider implements ConfigProviderInterface
      *
      * @return array
      */
-    public function getConfig()
-    {
+    public function getConfig() {
         // set default array
         $config = [];
 

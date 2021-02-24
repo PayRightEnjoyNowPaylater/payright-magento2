@@ -3,22 +3,20 @@
  * Copyright © 2015 Magento. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 namespace Payright\Payright\Model;
-
-
 
 /**
  * Pay In Store payment method model
  */
-class MyPayright extends \Magento\Payment\Model\Method\AbstractMethod
-{
+class Payright extends \Magento\Payment\Model\Method\AbstractMethod {
 
     /**
      * Payment code
      *
      * @var string
      */
-    protected $_code = 'mypayright';
+    protected $_code = 'payright';
 
     /**
      * Availability option
@@ -27,9 +25,6 @@ class MyPayright extends \Magento\Payment\Model\Method\AbstractMethod
      */
     protected $_isOffline = true;
 
-    const METHOD_CODE = 'payrightpaypayovertime';
-
-
-  
+    const METHOD_CODE = 'payright';
 
 }

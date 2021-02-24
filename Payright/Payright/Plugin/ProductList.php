@@ -1,4 +1,5 @@
 <?php
+
 namespace Payright\Payright\Plugin;
 
 use Magento\Framework\View\Element\Template;
@@ -6,12 +7,12 @@ use Magento\Catalog\Model\Product as Product;
 use Magento\Framework\Registry as Registry;
 use Magento\Directory\Model\Currency as Currency;
 use Magento\Framework\Component\ComponentRegistrar as ComponentRegistrar;
-use Payright\Payright\Model\Config\EnjoynowPaylater as PayrightConfig;
+use Payright\Payright\Model\Config\Payright as PayrightConfig;
 use Payright\Payright\Helper\Data as Helper;
 
 ini_set("display_errors", "0");
-class ProductList
-{
+
+class ProductList {
     protected $product;
     protected $payrightConfig;
     protected $payrightMain;
@@ -26,18 +27,18 @@ class ProductList
 
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
-    Product $product,
-    PayrightConfig $payrightConfig,
-    Helper $payrightHelper,
-    \Magento\Catalog\Model\Session $catalogSession,
-    \Magento\Framework\Session\SessionManagerInterface $session,
-    Registry $registry,
-    \Magento\Framework\Json\Helper\Data $jsonHelper,
-    \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+        Product $product,
+        PayrightConfig $payrightConfig,
+        Helper $payrightHelper,
+        \Magento\Catalog\Model\Session $catalogSession,
+        \Magento\Framework\Session\SessionManagerInterface $session,
+        Registry $registry,
+        \Magento\Framework\Json\Helper\Data $jsonHelper,
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
     ) {
         $this->registry = $registry;
         $this->_catalogSession = $catalogSession;
-        
+
         $this->payrightConfig = $payrightConfig;
         $this->payrightHelper = $payrightHelper;
         $this->session = $session;
@@ -48,11 +49,11 @@ class ProductList
     public function aroundGetProductDetailsHtml(
         \Magento\Catalog\Block\Product\ListProduct $subject,
         \Closure $proceed,
-        
+
         \Magento\Catalog\Model\Product $product
     ) {
         $this->product = $product;
-        
+
 
         $productId = $product->getId();
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
@@ -64,31 +65,26 @@ class ProductList
         }
     }
 
-    public function getPrice($finalPrice)
-    {
+    public function getPrice($finalPrice) {
         $this->session->start();
         $result = $this->payrightHelper->calculateSingleProductInstallment($finalPrice);
 
         if ($result != 'exceed_amount' && $result != 'APIError') {
             $resultString = "<div class='installments' style='padding: 10px;
-         margin-bottom: 10px;'>or <strong>".$result['noofrepayments']."</strong>". " Fortnightly ". "payments of $" . "<strong>" . $result['LoanAmountPerPayment']."</strong> with <span class='payright-logo'></span> 
+         margin-bottom: 10px;'>or <strong>" . $result['numberOfRepayments'] . "</strong>" . " Fortnightly " . "payments of $" . "<strong>" . $result['loanAmountPerPayment'] . "</strong> with <span class='payright-logo'></span> 
 
          <img id='prlogo' >";
 
             return $resultString;
         } else {
-            if (($this->scopeConfig->getValue('payment/mypayright/sandbox')) == 1) {
+            if (($this->scopeConfig->getValue('payment/payright/sandbox')) == 1) {
                 $resultString = "<div class='installments' style='padding: 2px; margin-bottom: 10px;'>There is some problem with API!!</div>";
                 return $resultString;
             }
         }
     }
-   
-       
-    
 
-    public function getConfigValue($field)
-    {
-        return $this->scopeConfig->getValue('payment/mypayright/'.$field);
+    public function getConfigValue($field) {
+        return $this->scopeConfig->getValue('payment/payright/' . $field);
     }
 }

@@ -5,27 +5,35 @@
  * See COPYING.txt for license details.
  */
 -->
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../Store/etc/config.xsd">
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../Store/etc/config.xsd">
     <default>
         <payment>
-                <mypayright>
-                    <fixed_country>Australia</fixed_country>
-                    <instructions_data>Enjoy Now, Pay Later</instructions_data>
-                    <payrightshowpricecategory>0</payrightshowpricecategory>
-                    <minicart>0</minicart>
-                    <modaloption>ModalOptionOne</modaloption>
+            <payright>
+                <region>AU</region>
+                <minamount>5</minamount>
                 <active>1</active>
-                <title>Payright - Buy Now Pay Later </title>
+                <sandbox>1</sandbox>
+                <title>Payright - Buy Now Pay Later</title>
                 <order_status>pending_payment</order_status>
                 <payment_action>true</payment_action>
-                <model>Payright\Payright\Model\MyPayright</model>
+                <model>Payright\Payright\Model\Payright</model>
                 <helpers>
-                <wsdlintegration>
-                        <class>Example_Wsdlintegration_Helper</class>
-                </wsdlintegration>
+                    <payrightintegration>
+                        <class>Payright_Helper</class>
+                    </payrightintegration>
                 </helpers>
                 <group>offline</group>
-            </mypayright>
+                <instructions_data>Show Payright Installments on:</instructions_data>
+                <payrightshowpriceproduct>1</payrightshowpriceproduct>
+                <payrightshowpricecategory>1</payrightshowpricecategory>
+                <minicart>1</minicart>
+                <bestsellerinstalments>1</bestsellerinstalments>
+                <crosssellinstalments>1</crosssellinstalments>
+                <relatedinstalments>1</relatedinstalments>
+                <upsellinstalments>1</upsellinstalments>
+                <can_use_checkout>1</can_use_checkout>
+            </payright>
             <!-- payment-config -->
         </payment>
     </default>

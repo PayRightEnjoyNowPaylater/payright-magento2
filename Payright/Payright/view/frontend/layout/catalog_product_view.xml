@@ -7,20 +7,23 @@
  * @copyright 2016-2018 PayRight https://www.payright.com.au
  */
 -->
-<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <head>
 
-    <css src="Payright_Payright::css/sample.css"/>
-    <css src="Payright_Payright::css/main1.css"/>
-    <css src="Payright_Payright::css/payright-modal.css"/>
+        <css src="Payright_Payright::css/sample.css"/>
+        <css src="Payright_Payright::css/main1.css"/>
+        <css src="Payright_Payright::css/payright-modal.css"/>
 
     </head>
     <body>
         <referenceContainer name="product.info.main">
-            <block class="Payright\Payright\Block\Catalog\Display" name="payright.test" after="product.info.price" template="Payright_Payright::payright/product.phtml"/>
+            <block class="Payright\Payright\Block\Catalog\Display" name="payright.test" after="product.info.price"
+                   template="Payright_Payright::payright/product.phtml"/>
         </referenceContainer>
         <referenceContainer name="content">
-            <block class="Payright\Payright\Block\Catalog\Display" name="payright.modal.popup" after="-" template="Payright_Payright::payright/modal.phtml" />
+            <block class="Payright\Payright\Block\Catalog\Display" name="payright.modal.popup" after="-"
+                   template="Payright_Payright::payright/modal.phtml"/>
         </referenceContainer>
     </body>
 </page>

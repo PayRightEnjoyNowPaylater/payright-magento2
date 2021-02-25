@@ -10,17 +10,16 @@ use Magento\Sales\Setup\SalesSetupFactory;
 use Magento\Framework\Setup\SchemaSetupInterface;
 
 
-class UpgradeSchema implements UpgradeSchemaInterface
-{
+class UpgradeSchema implements UpgradeSchemaInterface {
 
     /**
      * @var SalesSetupFactory
-    */
+     */
     protected $salesSetupFactory;
 
     /**
      * @var QuoteSetupFactory
-    */
+     */
 
     protected $quoteSetupFactory;
 
@@ -28,30 +27,33 @@ class UpgradeSchema implements UpgradeSchemaInterface
      * @param SalesSetupFactory $salesSetupFactory
      * @param QuoteSetupFactory $quoteSetupFactory
      */
-    public function __construct(SalesSetupFactory $salesSetupFactory, QuoteSetupFactory $quoteSetupFactory)
-    {
+    public function __construct(SalesSetupFactory $salesSetupFactory, QuoteSetupFactory $quoteSetupFactory) {
         $this->salesSetupFactory = $salesSetupFactory;
         $this->quoteSetupFactory = $quoteSetupFactory;
     }
 
-    
-    public function upgrade(SchemaSetupInterface $setup, ModuleContextInterface $context)
-    {
-         /**
-            * Prepare database for upgrade 
-         */
-            $setup->startSetup();
-            
-            $setup->getConnection()->addColumn(
-                $setup->getTable('sales_order'),
-                'payrightplanid',
-                [
-                    'type' => 'text',
-                    'nullable' => true  ,
-                    'comment' => 'Bank',
-                ]
-            );
 
-            $setup->endSetup();
+    public function upgrade(SchemaSetupInterface $setup, ModuleContextInterface $context) {
+        /**
+         * Prepare database for upgrade
+         */
+        $setup->startSetup();
+
+        if (version_compare($context->getVersion(), "1.0.0", "<")) {
+//        $setup->getConnection()->addColumn(
+//            $setup->getTable('sales_order'),
+//            'payrightplanid',
+//            [
+//                'type' => 'text',
+//                'nullable' => true,
+//                'comment' => 'Bank',
+//            ]
+//        );
+        }
+        if (version_compare($context->getVersion(), '1.0.1', '<')) {
+            // Your upgrade script
+        }
+
+        $setup->endSetup();
     }
 }

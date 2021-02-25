@@ -6,31 +6,41 @@ use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\Event\Observer as EventObserver;
 use Payright\Payright\Helper\Data as Helper;
 
+class ConfigObserver implements ObserverInterface {
 
-class ConfigObserver implements ObserverInterface
-{
-   
+    protected $_payrightConfig;
+    public $_accessToken;
+
     public function __construct(
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         Helper $payrightHelper,
-        \Magento\Framework\Message\ManagerInterface $messageManager
+        \Magento\Framework\Message\ManagerInterface $messageManager,
+        \Payright\Payright\Model\Config\Payright $payrightConfig
     ) {
         $this->payrightHelper = $payrightHelper;
         $this->scopeConfig = $scopeConfig;
         $this->_messageManager = $messageManager;
+        $this->_payrightConfig = $payrightConfig;
+        $this->_accessToken = $this->_payrightConfig->getAccessToken();
     }
 
-    public function execute(EventObserver $observer)
-    {
-       $authToken = $this->payrightHelper->DoApiCallPayright();
-       if ($authToken['status'] != 'Authenticated') {
-       	$message = 'There is some problem with API Authentication details. Please check again!!';
-       	$this->_messageManager->addError($message);
-       } 
-    }
+    public function execute(\Magento\Framework\Event\Observer $observer) {
+        $data = $this->payrightHelper->performApiGetRates();
+        $isInvalidAccessToken = isset($data['status']) && isset($data['message']);
 
-    public function getConfigValue($field)
-    {
-        return $this->scopeConfig->getValue('payment/mypayright/'.$field, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+        $authToken = $this->_accessToken;
+
+        $emptyAuthToken = is_string($authToken) && strlen(trim($authToken)) === 0;
+
+        if ($emptyAuthToken) {
+            $message = 'We require your \'Access Token\', it can be obtained from your merchant store at the developer portal.';
+            $this->_messageManager->addError($message);
+        } else if ($isInvalidAccessToken) {
+            $message = 'Your \'Access Token\' is invalid, please specify the correct \'access token\' and store \'region\'.';
+            $this->_messageManager->addError($message);
+        } else {
+            $message = 'Your access token is saved. Please back up your access token ' . $authToken . ' for safe-keeping.';
+            $this->_messageManager->addSuccess($message);
+        }
     }
 }

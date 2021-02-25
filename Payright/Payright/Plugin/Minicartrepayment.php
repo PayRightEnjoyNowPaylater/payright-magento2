@@ -1,61 +1,54 @@
 <?php
+
 namespace Payright\Payright\Plugin;
 
 use Payright\Payright\Helper\Data as Helper;
-use Payright\Payright\Model\Config\EnjoynowPaylater as PayrightConfig;
+use Payright\Payright\Model\Config\Payright as PayrightConfig;
 
 class Minicartrepayment {
 
-	protected $payrightHelper;
+    protected $payrightHelper;
     protected $scopeConfig;
 
-	 public function __construct(
+    public function __construct(
         Helper $payrightHelper,
-         PayrightConfig $payrightConfig,
-         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+        PayrightConfig $payrightConfig,
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
     ) {
-	 	$this->payrightHelper = $payrightHelper;
+        $this->payrightHelper = $payrightHelper;
         $this->payrightConfig = $payrightConfig;
         $this->scopeConfig = $scopeConfig;
     }
 
 
-    public function afterGetSectionData(\Magento\Checkout\CustomerData\Cart $subject, array $result)
-    {
-    	
+    public function afterGetSectionData(\Magento\Checkout\CustomerData\Cart $subject, array $result) {
+
         // $cart = $this->getConfigValue('minicart');
         //echo $cartAmount."--";
         // 
         //$result['extra_data'] = $result['subtotalAmount'];
-    	if($result['subtotalAmount'] > 0 && isset($result['subtotalAmount']))
-    	{
-    	    $cartAmount = number_format((float)$result['subtotalAmount'], 2, '.', '');
+        if ($result['subtotalAmount'] > 0 && isset($result['subtotalAmount'])) {
+            $cartAmount = number_format((float)$result['subtotalAmount'], 2, '.', '');
             $result['extra_data'] = $result['subtotalAmount'];
-    		$transactionOverview = $this->payrightHelper->calculateSingleProductInstallment($cartAmount);
-    		
-    		if(($transactionOverview != 'exceed_amount' && $transactionOverview != 'APIError') && ($this->getConfigValue('minicart') == "1"))
-    		{
-    			$InstallTxtBuild = $transactionOverview['noofrepayments']." ".$transactionOverview['repaymentfrequency']." payments of $ ".$transactionOverview['LoanAmountPerPayment'];
-    			$result['extra_data'] = $InstallTxtBuild.'<span class="payright-logo" ><img ></span>';
-    		}
-    		else
-    		{
-    			$result['extra_data'] = '';
-    			return $result;
-    		}
+            $transactionOverview = $this->payrightHelper->calculateSingleProductInstallment($cartAmount);
 
-    	}
-    	else
-    	{
-    		$result['extra_data'] = '';
-    	}
-    
+            if (($transactionOverview != 'exceed_amount' && $transactionOverview != 'APIError') && ($this->getConfigValue('minicart') == "1")) {
+                $InstallTxtBuild = $transactionOverview['numberOfRepayments'] . " " . $transactionOverview['repaymentFrequency'] . " payments of $ " . $transactionOverview['loanAmountPerPayment'];
+                $result['extra_data'] = $InstallTxtBuild . '<span class="payright-logo" ><img ></span>';
+            } else {
+                $result['extra_data'] = '';
+                return $result;
+            }
+
+        } else {
+            $result['extra_data'] = '';
+        }
+
         return $result;
     }
 
-    public function getConfigValue($field)
-    {
-        return $this->scopeConfig->getValue('payment/mypayright/'.$field);
+    public function getConfigValue($field) {
+        return $this->scopeConfig->getValue('payment/payright/' . $field);
     }
 }
 

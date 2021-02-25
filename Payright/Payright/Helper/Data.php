@@ -5,26 +5,44 @@
  * @author PayRight
  * @copyright 2016-2018 PayRight https://www.payright.com.au
  */
+
 namespace Payright\Payright\Helper;
 
 use Magento\Sales\Model\Order\Payment;
 use Magento\Sales\Model\OrderRepository as MageOrderRepository;
 
-class Data extends \Magento\Framework\App\Helper\AbstractHelper
-{
+class Data extends \Magento\Framework\App\Helper\AbstractHelper {
     protected $_logger;
     protected $_payrightConfig;
     protected $_moduleList;
     protected $_client;
     protected $_registry;
     protected $jsonHelper;
+    protected $_apiEndpoint;
+    public $_accessToken;
 
-   
-
-    public $_payrightAcceessToken;
-    public $_payrightRefreshToken;
-    protected $_sandBoxApiEndpoint;
- 
+    /**
+     * Data constructor.
+     *
+     * @param \Magento\Framework\App\Helper\Context $context
+     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
+     * @param \Magento\Catalog\Model\Product $product
+     * @param \Magento\Quote\Model\QuoteFactory $quote
+     * @param \Magento\Quote\Model\QuoteManagement $quoteManagement
+     * @param \Magento\Quote\Api\CartRepositoryInterface $cartRepositoryInterface
+     * @param \Magento\Quote\Api\CartManagementInterface $cartManagementInterface
+     * @param \Magento\Customer\Model\CustomerFactory $customerFactory
+     * @param \Magento\Customer\Api\CustomerRepositoryInterface $customerRepository
+     * @param \Magento\Sales\Model\Order $order
+     * @param \Payright\Payright\Model\Config\Payright $payrightConfig
+     * @param \Magento\Framework\Module\ModuleListInterface $moduleList
+     * @param \Magento\Framework\HTTP\ZendClientFactory $httpClientFactory
+     * @param \Magento\Framework\Registry $registry
+     * @param \Magento\Framework\Json\Helper\Data $jsonHelper
+     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+     * @param \Magento\Framework\Session\SessionManagerInterface $session
+     * @param \Magento\Framework\Message\ManagerInterface $messageManager
+     */
     public function __construct(
         \Magento\Framework\App\Helper\Context $context,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
@@ -36,7 +54,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         \Magento\Customer\Model\CustomerFactory $customerFactory,
         \Magento\Customer\Api\CustomerRepositoryInterface $customerRepository,
         \Magento\Sales\Model\Order $order,
-        \Payright\Payright\Model\Config\EnjoynowPaylater $payrightConfig,
+        \Payright\Payright\Model\Config\Payright $payrightConfig,
         \Magento\Framework\Module\ModuleListInterface $moduleList,
         \Magento\Framework\HTTP\ZendClientFactory $httpClientFactory,
         \Magento\Framework\Registry $registry,
@@ -44,16 +62,28 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Magento\Framework\Session\SessionManagerInterface $session,
         \Magento\Framework\Message\ManagerInterface $messageManager
-
-
     ) {
         $this->scopeConfig = $scopeConfig;
         $this->_payrightConfig = $payrightConfig;
-        if (($this->scopeConfig->getValue('payment/mypayright/sandbox')) == 0) {
-            $this->_sandBoxApiEndpoint = $this->_payrightConfig->getProductionAPIUrl();
+
+        // Toggle sandbox
+        if (($this->scopeConfig->getValue('payment/payright/sandbox')) == 0) {
+            // Specify AU or NZ region - for Production
+            if (($this->scopeConfig->getValue('payment/payright/region')) == 'AU') {
+                $this->_apiEndpoint = $this->_payrightConfig->getProductionAPIUrl();
+            } else {
+                $this->_apiEndpoint = $this->_payrightConfig->getProductionAPIUrlNz();
+            }
         } else {
-            $this->_sandBoxApiEndpoint = $this->_payrightConfig->getSandboxAPIUrl();
+            // Specify AU or NZ region - for Sandbox
+            if (($this->scopeConfig->getValue('payment/payright/region')) == 'AU') {
+                $this->_apiEndpoint = $this->_payrightConfig->getSandboxAPIUrl();
+            } else {
+                $this->_apiEndpoint = $this->_payrightConfig->getSandboxAPIUrlNz();
+            }
         }
+
+        $this->_accessToken = $this->_payrightConfig->getAccessToken();
 
         $this->_storeManager = $storeManager;
         $this->_product = $product;
@@ -64,14 +94,12 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         $this->customerFactory = $customerFactory;
         $this->customerRepository = $customerRepository;
         $this->order = $order;
- 
-        
+
         $this->_moduleList = $moduleList;
         $this->_client = $httpClientFactory;
         $this->_registry = $registry;
         $this->jsonHelper = $jsonHelper;
 
-        
         $this->session = $session;
         $this->_messageManager = $messageManager;
         // $this->getSessionValue();
@@ -79,494 +107,265 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         parent::__construct($context);
     }
 
-
-    public function DoApiCallPayright()
-    {
-        //API URL for authentication
-
-        $apiURL = "oauth/token";
-
-
-
-        $exsistingPayrightAccessToken = $this->_registry->registry('payrightAccessToken');
-        $exsistingPayrightRefreshToken = $this->_registry->registry('payrightRefereshToken');
-        $reponseArray = array();
-
-        ### check if the auth token is in the session
-        if (empty($this->_registry->registry('payrightAccessToken')) && empty($this->_registry->registry('payrightRefereshToken'))) {
-
-       
-           
-            ####.
-            $client = $this->_client->create();
-
-            $client->setUri($this->_sandBoxApiEndpoint.$apiURL);
-
-
-
-            $client->setConfig(['timeout' => 15]);
-            $client->setHeaders(['Content-Type: application/json', 'Accept: application/json']);
-
-            $params = array(
-                "username" => $this->getConfigValue('user_name'),
-                "password" => $this->getConfigValue('password'),
-                "grant_type" => 'password',
-                "client_id" => $this->getConfigValue('client_id'),
-                "client_secret" => $this->getConfigValue('client_secret'),
-            );
-
-
-
-           
-         
-            $client->setParameterPost($params);
-            $client->setMethod(\Zend_Http_Client::POST);
-
-
-
-            try {
-                $responseBody = $client->request()->getBody();
-                $decodedData = $this->jsonHelper->jsonDecode($responseBody);
-
-                if (array_key_exists('error', $decodedData)) {
-                    return false;
-                } else {
-                    $this->_payrightAcceessToken = $decodedData['access_token'];
-                    $this->_payrightRefreshToken = $decodedData['refresh_token'];
-
-                    $reponseArray['payrightAccessToken'] = $this->_payrightAcceessToken;
-                    $reponseArray['payrightRefreshToken'] = $this->_payrightRefreshToken;
-                    $reponseArray['status'] = 'Authenticated';
-
-                    return $reponseArray;
-  
-
-                    ## write the payright access tokenn and the refresh token to the mage registry
-                }
-            } catch (\Exception $e) {
-                return "Error";
-            }
-        }
+    /**
+     *
+     *
+     * @param $field
+     * @return mixed
+     */
+    public function getConfigValue($field) {
+        return $this->scopeConfig->getValue('payment/payright/' . $field, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
-
-
-
-
-    public function DoApiConfCallPayright($authToken)
-    {
-        $apiURL = "api/v1/configuration";
-
-        $returnArray = array();
- 
-
-        $client = $this->_client->create();
-        $client->setUri($this->_sandBoxApiEndpoint.$apiURL);
-        $client->setConfig(['timeout' => 15]);
-        $client->setHeaders(['Content-Type: application/json', 'Accept: application/json','Authorization:'.$authToken]);
-
-        $params = array(
-                "merchantusername" => $this->getConfigValue('merchantusername'),
-                "merchantpassword" => $this->getConfigValue('merchantpassword'),
+    /**
+     * Get customer payment plan from new checkout, by 'checkoutId'.
+     * Only used for 'responseAction' function in PaymentController.
+     *
+     * @param $merchantReference
+     * @param $saleAmount
+     * @param $redirectUrl
+     * @param $expiresAt
+     * @return array
+     */
+    public function performApiCheckout($merchantReference, $saleAmount, $redirectUrl, $expiresAt) {
+        // Prepare json raw data payload
+        $data = array(
+            'merchantReference' => $merchantReference,
+            'saleAmount' => $saleAmount,
+            'type' => 'standard',
+            'redirectUrl' => $redirectUrl,
+            'expiresAt' => $expiresAt
         );
 
-        $client->setParameterPost($params);
-        $client->setMethod(\Zend_Http_Client::POST);
+        // Define API POST call, to perform checkout
+        $client = new \Zend_Http_Client($this->_apiEndpoint . "api/v1/checkouts");
+        $client->setHeaders(
+            array(
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . $this->_accessToken,
+            )
+        );
+        $client->setConfig(['timeout' => 15]);
 
-        $responseBody = $client->request()->getBody();
-            $decodedData = $this->jsonHelper->jsonDecode($responseBody);
+        // Lastly, define POST method, with json body data sent
+        $response = $client->setRawData(json_encode($data), 'application/json')->request('POST');
+
+        return json_decode($response->getBody(), true);
+    }
+
+    /**
+     * Get customer payment plan from new checkout, by 'checkoutId'.
+     * Only used for 'responseAction'.
+     *
+     * @param $checkoutId
+     * @return Exception
+     */
+    public function getPlanDataByCheckoutId($checkoutId) {
+        $id = $checkoutId;
 
         try {
-            $responseBody = $client->request()->getBody();
-            $decodedData = $this->jsonHelper->jsonDecode($responseBody);
-            if (!isset($decodedData['code']) && isset($decodedData['data']['rates'])) {
-                $returnArray['configToken'] = $decodedData['data']['configToken'];
-                $returnArray['rates'] = $decodedData['data']['rates'];
-                $returnArray['conf'] = $decodedData['data']['conf'];
-                $returnArray['establishment_fee'] = $decodedData['data']['establishment_fee'];
+            // Define API GET call, to get Plan with Checkout ID
+            $client = new \Zend_Http_Client($this->_apiEndpoint . "api/v1/checkouts/" . $id);
+            $client->setHeaders(
+                array(
+                    'Accept' => 'application/json',
+                    'Content-Type' => 'application/json',
+                )
+            );
+            $client->setConfig(['timeout' => 15]);
+            $client->setMethod(\Zend_Http_Client::GET);
+
+            return json_decode($client->request()->getBody(), true);
+        } catch (\Exception $e) {
+            return json_decode($client->request()->getBody(), true);
+        }
+    }
+
+    /**
+     * Activate Payright payment plan. Please note, this is a PUT request but we need POST for Zend_Http_Client.
+     *
+     * @param $checkoutId
+     * @return array
+     */
+    public function activatePlan($checkoutId) {
+        // Capture 'checkoutId' from parameter
+        $cId = $checkoutId;
+
+        // Define API PUT call, to create new checkout
+        $client = new \Zend_Http_Client($this->_apiEndpoint . "api/v1/checkouts/" . $cId . "/activate");
+        $client->setHeaders(
+            array(
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . $this->_accessToken,
+            )
+        );
+        $client->setConfig(array('timeout' => 15));
+        $client->setMethod(\Zend_Http_Client::PUT);
+
+        $response = json_decode($client->request()->getBody(), true);
+
+        // Response is data->message = 'Checkout activated'
+        // else data->error and data->message
+        try {
+            return $response;
+        } catch (\Exception $e) {
+            return $response;
+        }
+    }
+
+    /**
+     * Retrieve data of 'rates', 'establishmentFees' and 'otherFees'.
+     *
+     * @return array
+     */
+    public function performApiGetRates() {
+        $response = [];
+
+        try {
+            $client = new \Zend_Http_Client($this->_apiEndpoint . "api/v1/merchant/configuration");
+            $client->setConfig(['timeout' => 15]);
+            $client->setHeaders([
+                'Accept' => 'application/json',
+                'Authorization' => 'Bearer ' . $this->_accessToken,
+            ]);
+
+            $client->setMethod(\Zend_Http_Client::GET);
+
+            $response = json_decode($client->request()->getBody(), true);
+
+            // Define an empty array, to store breakdown of the 'data'
+            $returnArray[] = null;
+
+            if (!isset($response['error']) && isset($response['data']['rates'])) {
+                $returnArray['rates'] = $response['data']['rates'];
+                $returnArray['establishmentFees'] = $response['data']['establishmentFees'];
+                $returnArray['otherFees'] = $response['data']['otherFees'];
+
                 return $returnArray;
             } else {
-                 return "Error";
+                // Return error response, 'code' and 'message' will be received
+                throw new \Exception();
             }
         } catch (\Exception $e) {
-            return "Error";
+            return $response['error'];
         }
-    }
-
-
-    public function DoApiTransactionOverview($apiToken, $SugarAuthToken, $configToken, $amount)
-    {
-        $apiURL = "api/v1/transactionOverview";
-        $returnArray = array();
-
-        $client = $this->_client->create();
-        $client->setUri($this->_sandBoxApiEndpoint.$apiURL);
-
-    
-        $client->setConfig(['timeout' => 15]);
-        $client->setHeaders(['Content-Type: application/json', 'Accept: application/json','Authorization:'.$apiToken]);
-
-        $paramsPayright = [
-            'Token' => $SugarAuthToken,
-            'ConfigToken' =>  $configToken,
-            'saleamount' => $amount
-        ];
-
-   
-        $client->setParameterPost($paramsPayright);
-        $client->setMethod(\Zend_Http_Client::POST);
-
-        try {
-            $responseBody = $client->request()->getBody();
-            $decodedData = $this->jsonHelper->jsonDecode($responseBody);
-            $returnArray = $decodedData['data'];
-
-
-            return $returnArray;
-        } catch (\Exception $e) {
-            echo $e->getMessage();
-        }
-    }
-
-
-
-    public function DoApiIntializeTransaction($apiToken, $SugarAuthToken, $configToken, $transData, $ecommClientId, $merchantReference)
-    {
-        $apiURL = "api/v1/intialiseTransaction";
-        $returnArray = array();
-
-
-        $client = $this->_client->create();
-        $client->setUri($this->_sandBoxApiEndpoint.$apiURL);
-
-        $client->setConfig(['timeout' => 300]);
-        $client->setHeaders(['Content-Type: application/json', 'Accept: application/json','Authorization:'.$apiToken]);
-        $decodedTranscationdata = $this->jsonHelper->jsonDecode($transData);
-
-       
-        $paramsPayright = [
-       'Token' => $SugarAuthToken,
-       'ConfigToken' =>  $configToken,
-       'transactiondata' => $transData,
-       'totalAmount' => $decodedTranscationdata['transactionTotal'],
-       'clientId' => $ecommClientId,
-       'merchantReference' => $merchantReference
-    ];
-
-
-
-        $client->setParameterPost($paramsPayright);
-        $client->setMethod(\Zend_Http_Client::POST);
-
-        try {
-            $responseBody = $client->request()->getBody();
-            $decodedData = $this->jsonHelper->jsonDecode($responseBody);
-            $returnArray = $decodedData;
-            return $returnArray;
-        } catch (\Exception $e) {
-            echo $e->getMessage();
-        }
-    }
-
-
-    public function getConfigValue($field)
-    {
-        return $this->scopeConfig->getValue('payment/mypayright/'.$field, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
 
     /**
-    * Create Order On Your Store
-    *
-    * @param array $orderData
-    * @return array
-    *
-    */
-
-    public function createMageOrder($orderData)
-    {
-
-            //init the store id and website id @todo pass from array
-        $store = $this->_storeManager->getStore();
-        $websiteId = $this->_storeManager->getStore()->getWebsiteId();
-                
-        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-        $customerSession = $objectManager->get('Magento\Customer\Model\Session');
-        $customerRepository = $objectManager->get('Magento\Customer\Api\CustomerRepositoryInterface');
-
-
-        $customerEmail = $customerSession->getCustomer()->getEmail();
-        
-        //init the customer
-        $customer=$this->customerFactory->create();
-        $customer->setWebsiteId($websiteId);
-        $customer->loadByEmail($customerEmail);// load customet by email address
-
-        //check the customer
-        if (!$customer->getEntityId()) {
-    
-                //If not available then create this customer
-            $customer->setWebsiteId($websiteId)
-                    ->setStore($store)
-                    ->setFirstname($orderData['shipping_address']['firstname'])
-                    ->setLastname($orderData['shipping_address']['lastname'])
-                    ->setEmail($orderData['email'])
-                    ->setPassword($orderData['email']);
-    
-            $customer->save();
-        }
-
-        //init the quote
-            $cartId = $this->cartManagementInterface->createEmptyCart(); //Create empty cart
-            $quote = $this->cartRepositoryInterface->get($cartId); // load empty cart quote
-            $quote->setStore($store);
-        // if you have allready buyer id then you can load customer directly
-        $customer= $this->customerRepository->getById($customer->getEntityId());
-        $quote->setCurrency();
-        $quote->assignCustomer($customer); //Assign quote to customer
-     
-        //add items in quote
-        foreach ($orderData as $item) {
-            $product=$this->_product->load($item['product_id']);
-            $product->setPrice($item['price']);
-            $quote->addProduct($product, intval($item['qty']));
-        }
-        
-        $billingAddress  = $quote->getBillingAddress();
-        $shippingAddress = (array) $quote->getShippingAddress();
-            
-
-        //Set Address to quote
-        $quote->getBillingAddress()->addData($shippingAddress);
-        $quote->getShippingAddress()->addData($shippingAddress);
-     
-        // Collect Rates and Set Shipping & Payment Method
-     
-        $shippingAddress=$quote->getShippingAddress();
-        $shippingAddress->setCollectShippingRates(true)
-                            ->collectShippingRates()
-                            ->setShippingMethod('flatrate_flatrate'); //shipping method
-            $quote->setPaymentMethod('mypayright'); //payment method
-            $quote->setInventoryProcessed(false); //not effetc inventory
-     
-            // Set Sales Order Payment
-        $quote->getPayment()->importData(['method' => 'mypayright']);
-        $quote->save(); //Now Save quote and your quote is ready
-     
-        // Collect Totals
-        $quote->collectTotals();
-     
-        // Create Order From Quote
-        $quote = $this->cartRepositoryInterface->get($quote->getId());
-        $orderId = $this->cartManagementInterface->placeOrder($quote->getId());
-        $order = $this->order->load($orderId);
-            
-        $order->setEmailSent(0);
-        $increment_id = $order->getRealOrderId();
-            
-        $orderState = \Magento\Sales\Model\Order::STATE_PROCESSING;
-        $order->setState($orderState)->setStatus(\Magento\Sales\Model\Order::STATE_PENDING_PAYMENT);
-        $order->save();
-
-
-        if ($order->getEntityId()) {
-            $result['order_id'] = $orderId;
-        } else {
-            $result = ['error'=>1,'msg'=>'Your custom message'];
-        }
-
-        return $result;
-    }
-
-    /**
-    * Create a function for change the status of plan
-    * @param integer PlanId
-    * @return array return the plan array with change status
-    */
-
-
-    public function planStatusChange($planId)
-    {
-        $apiURL = "api/v1/changePlanStatus";
-
-
-        $authToken = $this->DoApiCallPayright();
-        $getPayRightAccessToken = $authToken['payrightAccessToken'];
-
-        $getApiConfiguration = $this->DoApiTransactionConfCallPayright($getPayRightAccessToken);
-        $sugarToken = $getApiConfiguration['auth']['auth-token'];
-        $configToken = $getApiConfiguration['configToken'];
-   
-        
-        $returnArray = array();
-
-        $client = $this->_client->create();
-        $client->setUri($this->_sandBoxApiEndpoint.$apiURL);
-
-
-        $client->setConfig(['timeout' => 15]);
-        $client->setHeaders(['Content-Type: application/json', 'Accept: application/json','Authorization:'.$getPayRightAccessToken]);
-
-        $paramsPayright = [
-            'Token' => $sugarToken,
-            'ConfigToken' =>  $configToken,
-            'id' => $planId,
-            'status' => 'Cancelled'
-            ];
-
-
-        $client->setParameterPost($paramsPayright);
-        $client->setMethod(\Zend_Http_Client::POST);
-
-        try {
-            $responseBody = $client->request()->getBody();
-            $decodedData = $this->jsonHelper->jsonDecode($responseBody);
-            $returnArray = $decodedData['data'];
-        } catch (\Exception $e) {
-            echo "Error";
-            exit;
-        }
-    }
-
-
-
-    public function getPlanDataByToken($ecommerceToken)
-    {
-        $apiURL = "api/v1/getEcomTokenData";
-        $authToken = $this->DoApiCallPayright();
-        $getPayRightAccessToken = $authToken['payrightAccessToken'];
-
-
-        $returnArray = array();
-        $client = $this->_client->create();
-
-        $client->setUri($this->_sandBoxApiEndpoint.$apiURL);
-
-        $client->setConfig(['timeout' => 15]);
-        $client->setHeaders(['Content-Type: application/json', 'Accept: application/json','Authorization:'.$getPayRightAccessToken]);
-
-        $paramsPayright = [
-            'ecomToken' => $ecommerceToken
-        ];
-
-
-        $client->setParameterPost($paramsPayright);
-        $client->setMethod(\Zend_Http_Client::POST);
-
-
-        try {
-            $responseBody = $client->request()->getBody();
-            $decodedData = $this->jsonHelper->jsonDecode($responseBody);
-
-            return $decodedData;
-        } catch (\Exception $e) {
-            echo "Error";
-            exit;
-        }
-    }
-
-   
-
-    /**
-     * Calculate the product installment
-     * @param int $saleAmount amount of purchased product
-     * @return calculated installment of sale amount
-     */
-
-    public function calculateSingleProductInstallment($saleAmount)
-    {
-        $authToken = $this->DoApiCallPayright();
-
-        if ($authToken != 'Error') {
-            $configValues = $this->DoApiConfCallPayright($authToken['payrightAccessToken']);
-
-            $getRates = $configValues['rates'];
-
-            if (isset($getRates)) {
-                $payrightInstallmentApproval = $this->getMaximumSaleAmount($getRates, $saleAmount);
-
-                if ($payrightInstallmentApproval == 0) {
-                    $establishment_fee = $configValues['establishment_fee'];
-                    $accountKeepingFees = $configValues['conf']['Monthly Account Keeping Fee'];
-                    $paymentProcessingFee = $configValues['conf']['Payment Processing Fee'];
-     
-                    $LoanTerm = $this->fetchLoanTermForSale($getRates, $saleAmount);
-                    $getMinDeposit = $this->calculateMinDeposit($getRates, $saleAmount, $LoanTerm);
-
-                    $getFrequancy = $this->getPaymentFrequancy($accountKeepingFees, $LoanTerm);
-                    $calculatedNoofRepayments = $getFrequancy['numberofRepayments'];
-                    $calculatedAccountKeepingFees = $getFrequancy['accountKeepingFees'];
-
-
-                    $LoanAmount = $saleAmount - $getMinDeposit;
-
-
-                    $formatedLoanAmount = number_format((float)$LoanAmount, 2, '.', '');
-
-                    $resEstablishmentFees = $this->getEstablishmentFees($LoanTerm, $establishment_fee);
-
-                    $establishmentFeePerPayment = $resEstablishmentFees / $calculatedNoofRepayments;
-                    $loanAmountPerPayment = $formatedLoanAmount / $calculatedNoofRepayments;
-
-                    $CalculateRepayments  = $this->calculateRepayment(
-                $calculatedNoofRepayments,
-                $calculatedAccountKeepingFees,
-                $resEstablishmentFees,
-                $LoanAmount,
-                $paymentProcessingFee
-            );
-
-
-                    $dataResponseArray['LoanAmount'] = $LoanAmount;
-                    $dataResponseArray['EstablishmentFee'] = $resEstablishmentFees;
-                    $dataResponseArray['minDeposit'] = $getMinDeposit;
-                    $dataResponseArray['TotalCreditRequired'] = $this->TotalCreditRequired($formatedLoanAmount, $resEstablishmentFees);
-                    $dataResponseArray['Accountkeepfees'] = $accountKeepingFees;
-                    $dataResponseArray['processingfees'] = $paymentProcessingFee;
-                    $dataResponseArray['saleAmount'] =  $saleAmount;
-                    $dataResponseArray['noofrepayments'] = $calculatedNoofRepayments;
-                    $dataResponseArray['repaymentfrequency'] = 'Fortnightly';
-                    $dataResponseArray['LoanAmountPerPayment'] =  $CalculateRepayments;
-
-                    return $dataResponseArray;
-                } else {
-                    return "exceed_amount";
-                }
-            } else {
-                return "APIError";
-            }
-        } else {
-               return "APIError";
-        }
-    }
-
-    /**
-     * Calculate Repayment installment
-     * @param int $numberOfRepayments term for sale amount
-     * @param int $AccountKeepingFees account keeping fees
-     * @param int $establishmentFees establishment fees
-     * @param int $LoanAmount loan amount
-     * @param int $paymentProcessingFee processing fees for loan amount
+     * Calculate product installments, for current product.
+     * The 'Block/Catalog/Installments.php' performs 'renderInstallments()'.
      *
+     * @param $saleAmount
+     * @return string
      */
+    public function calculateSingleProductInstallment($saleAmount) {
+        // Get 'Access Token' from system configuration
+        $authToken = $this->_accessToken;
 
-    public function calculateRepayment($numberOfRepayments, $AccountKeepingFees, $establishmentFees, $LoanAmount, $paymentProcessingFee)
-    {
-        $RepaymentAmountInit = ((floatval($establishmentFees) + floatval($LoanAmount)) / $numberOfRepayments);
-        $RepaymentAmount = floatval($RepaymentAmountInit) + floatval($AccountKeepingFees) + floatval($paymentProcessingFee);
-        return number_format($RepaymentAmount, 2, '.', ',');
+        // Get 'data' = 'rates', 'establishmentFees' and 'otherFees'
+        $data = $this->performApiGetRates();
+
+        // Breakdown fields of 'data'
+        $rates = $data['rates'];
+        $establishmentFees = $data['establishmentFees'];
+
+        // We need the mentioned 'otherFees' below, to calculate for 'payment frequency'
+        // and 'loan amount per repayment'
+        $accountKeepingFee = $data['otherFees']['monthlyAccountKeepingFee'];
+        $paymentProcessingFee = $data['otherFees']['paymentProcessingFee'];
+
+        // Check if the sale amount falls within the rate card, and determine lowest term and deposit
+        $minimumDepositAndTerm = $this->getMinimumDepositAndTerm($rates, $saleAmount);
+
+        // Breakdown fields of 'minimumDepositAndTerm'
+        $depositAmount = $minimumDepositAndTerm['minimumDepositAmount']; // minimum deposit amount = deposit amount
+        $term = $minimumDepositAndTerm['minimumDepositTerm']; // loan term = term
+        $loanAmount = $saleAmount - $depositAmount; // 'minimum deposit amount' = 'deposit amount'.
+
+        // Begin 'Catch Error Types'
+        if (!isset($rates)) {
+            return "rates_error";
+        }
+
+        if (empty($minimumDepositAndTerm)) {
+            return "exceed_amount";
+        }
+
+        if (!isset($authToken)) {
+            return "auth_token_error";
+        }
+        // End 'Catch Error Types'
+
+        // Get your 'payment frequency', from 'monthly account keeping fee' and 'loan term'
+        $getPaymentFrequency = $this->getPaymentFrequency($accountKeepingFee, $term);
+
+        // Calculate and collect all 'number of repayments' and 'monthly account keeping fees'
+        $calculatedNumberOfRepayments = $getPaymentFrequency['numberOfRepayments'];
+        $calculatedAccountKeepingFees = $getPaymentFrequency['accountKeepingFees'];
+
+        // For 'total credit required' output. Format the 'loan amount', into currency format.
+        $formattedLoanAmount = number_format((float)$loanAmount, 2, '.', '');
+
+        // Process 'establishment fees', from 'loan term' and 'establishment fees' (response)
+        $resEstablishmentFees = $this->getEstablishmentFees($term, $establishmentFees);
+
+        // Calculate repayment, to get 'loan amount' as 'loan amount per payment'.
+        $calculateRepayments = $this->calculateRepayment(
+            $calculatedNumberOfRepayments,
+            $calculatedAccountKeepingFees,
+            $resEstablishmentFees,
+            $loanAmount,
+            $paymentProcessingFee);
+
+        // The entire breakdown for calculated single product 'installment'.
+        $dataResponseArray['loanAmount'] = $loanAmount;
+        $dataResponseArray['establishmentFee'] = $resEstablishmentFees;
+        $dataResponseArray['minDeposit'] = $depositAmount;
+        $dataResponseArray['totalCreditRequired'] = $this->totalCreditRequired($formattedLoanAmount, $resEstablishmentFees);
+        $dataResponseArray['accountKeepingFee'] = $accountKeepingFee;
+        $dataResponseArray['paymentProcessingFee'] = $paymentProcessingFee;
+        $dataResponseArray['saleAmount'] = $saleAmount;
+        $dataResponseArray['numberOfRepayments'] = $calculatedNumberOfRepayments;
+        $dataResponseArray['repaymentFrequency'] = 'Fortnightly';
+        $dataResponseArray['loanAmountPerPayment'] = $calculateRepayments;
+
+        return $dataResponseArray;
     }
 
     /**
-     * Calculate Minimum deposit trhat needs to be pay for sale amount
+     * Calculate repayment installment
+     *
+     * @param int $numberOfRepayments term for sale amount
+     * @param int $accountKeepingFee account keeping fees
+     * @param int $establishmentFees establishment fees
+     * @param int $loanAmount loan amount
+     * @param int $paymentProcessingFee processing fees for loan amount
+     * @return string number format amount
+     */
+    public function calculateRepayment(
+        $numberOfRepayments,
+        $accountKeepingFee,
+        $establishmentFees,
+        $loanAmount,
+        $paymentProcessingFee) {
+        $repaymentAmountInit = ((floatval($establishmentFees) + floatval($loanAmount)) / $numberOfRepayments);
+        $repaymentAmount = floatval($repaymentAmountInit) + floatval($accountKeepingFee) + floatval($paymentProcessingFee);
+
+        return number_format($repaymentAmount, 2, '.', ',');
+    }
+
+    /**
+     * Calculate Minimum deposit that needs to be pay for sale amount
+     *
      * @param array $getRates
      * @param int $saleAmount amount for purchased product
-     * @return float mindeposit
+     * @param $loanTerm
+     * @return float
      */
-
-
-    public function calculateMinDeposit($getRates, $saleAmount, $loanTerm)
-    {
+    public function calculateMinDeposit($getRates, $saleAmount, $loanTerm) {
         for ($i = 0; $i < count($getRates); $i++) {
             for ($l = 0; $l < count($getRates[$i]); $l++) {
                 if ($getRates[$i][2] == $loanTerm) {
@@ -574,277 +373,111 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
                 }
             }
         }
-         
+
         if (isset($per)) {
             $percentage = min($per);
-            $value = $percentage/100*$saleAmount;
+            $value = $percentage / 100 * $saleAmount;
             return money_format('%.2n', $value);
         } else {
             return 0;
         }
     }
 
-    /**
-     * Payment frequancy for loan amount
-     * @param float $accountKeepingFees account keeping fees
-     * @param int $LoanTerm loan term
-     * @param array $returnArray noofpayments and accountkeeping fees
+    /*
+     * Get minimum deposit amount + percentage + term (loan term)
+     *
      */
+    function getMinimumDepositAndTerm($rates, $saleAmount) {
+        // Iterate through each term, apply the minimum deposit to the sale amount and see if it fits in the rate card. If not found, move to a higher term
+        foreach ($rates as $rate) {
+            $minimumDepositPercentage = $rate['minimumDepositPercentage'];
+            $depositAmount = $saleAmount * ($minimumDepositPercentage / 100);
+            $loanAmount = $saleAmount - $depositAmount;
 
-    public function getPaymentFrequancy($accountKeepingFees, $LoanTerm)
-    {
-        $RepaymentFrequecy = 'Fortnightly';
-        
-        if ($RepaymentFrequecy == 'Weekly') {
-            $j = floor($LoanTerm * (52/12));
-            $o = $accountKeepingFees * 12 / 52;
+            // Check if loan amount is within range
+            if ($loanAmount >= $rate['minimumPurchase'] && $loanAmount <= $rate['maximumPurchase']) {
+                return [
+                    'minimumDepositPercentage' => $minimumDepositPercentage,
+                    // If above PHP 7.4 check, source: https://www.php.net/manual/en/function.money-format.php
+                    'minimumDepositAmount' => function_exists('money_format') ? money_format('%.2n', $depositAmount) : sprintf('%01.2f', $depositAmount),
+                    'minimumDepositTerm' => $rate['term'],
+                ];
+            }
+        }
+        // No valid term and deposit found
+        return [];
+    }
+
+    /**
+     * Get payment frequency for loan amount.
+     *
+     * @param float $accountKeepingFee account keeping fees
+     * @param int $loanTerm loan term
+     * @return mixed
+     */
+    public function getPaymentFrequency($accountKeepingFee, $loanTerm) {
+        $repaymentFrequency = 'Fortnightly';
+
+        if ($repaymentFrequency == 'Weekly') {
+            $j = floor($loanTerm * (52 / 12));
+            $o = $accountKeepingFee * 12 / 52;
         }
 
-        if ($RepaymentFrequecy == 'Fortnightly') {
-            $j = floor($LoanTerm*(26/12));
-            if ($LoanTerm == 3) {
+        if ($repaymentFrequency == 'Fortnightly') {
+            $j = floor($loanTerm * (26 / 12));
+            if ($loanTerm == 3) {
                 $j = 7;
             }
-            $o = $accountKeepingFees * 12 / 26;
+            $o = $accountKeepingFee * 12 / 26;
         }
 
-        if ($RepaymentFrequecy == 'Monthly') {
-            $j = parseInt(k);
-            $o = $accountKeepingFees;
+        if ($repaymentFrequency == 'Monthly') {
+            $j = $loanTerm;
+            $o = $accountKeepingFee;
         }
 
-        $numberofRepayments = $j;
-        $accountKeepingFees = $o;
+        $numberOfRepayments = $j;
+        $accountKeepingFee = $o;
 
-        $returnArray['numberofRepayments'] = $numberofRepayments;
-        $returnArray['accountKeepingFees'] = round($accountKeepingFees, 2);
+        $returnArray['numberOfRepayments'] = $numberOfRepayments;
+        $returnArray['accountKeepingFees'] = round($accountKeepingFee, 2);
 
         return $returnArray;
     }
 
     /**
-     * Get the loan term for sale amount
-     * @param array $rates rates for merchant
-     * @param float $saleAmount sale amount
-     * @return float loanamount
-     */
-
-   
-    public function fetchLoanTermForSale($rates, $saleAmount)
-    {
-        $ratesArray = array();
-        //$generateLoanTerm = '';
-
-     
-        foreach ($rates as $key => $rate) {
-            $ratesArray[$key]['Term'] = $rate['2'];
-            $ratesArray[$key]['Min'] = $rate['3'];
-            $ratesArray[$key]['Max'] = $rate['4'];
-            
-       
-
-            if (($saleAmount >= $ratesArray[$key]['Min'] && $saleAmount <= $ratesArray[$key]['Max'])) {
-                $generateLoanTerm[] = $ratesArray[$key]['Term'];
-            }
-        }
-
-        if (isset($generateLoanTerm)) {
-            return min($generateLoanTerm);
-        } else {
-            return 0;
-        }
-    }
-
-    /**
      * Get the establishment fees
+     *
      * @param int $loanTerm loan term for sale amount
-     * @return  calculated establishment fees
+     * @param $establishmentFees
+     * @return string $h establishment fees
      */
-
-    public function getEstablishmentFees($LoanTerm, $establishmentFees)
-    {
-        $fee_bandArray = array();
-        $feebandCalculator = 0;
-
-        foreach ($establishmentFees as $key => $row) {
-            $fee_bandArray[$key]['term'] = $row['term'];
-            $fee_bandArray[$key]['initial_est_fee'] = $row['initial_est_fee'];
-            $fee_bandArray[$key]['repeat_est_fee'] = $row['repeat_est_fee'];
-
-            if ($fee_bandArray[$key]['term'] == $LoanTerm) {
-                $h = $row['initial_est_fee'];
+    public
+    function getEstablishmentFees($loanTerm, $establishmentFees) {
+        foreach ($establishmentFees as $key => $estFee) {
+            if ($estFee['term'] == $loanTerm) {
+                $initialEstFee = $estFee['initialEstFee'];
             }
-
-            $feebandCalculator++;
         }
-        if (isset($h)) {
-            return $h;
+
+        if (isset($initialEstFee)) {
+            return $initialEstFee;
         } else {
             return 0;
         }
     }
 
     /**
-     * Get the maximum limit for sale amount
-     * @param array $getRates get the rates for merchant
-     * @param float $saleAmount price of purchased amount
-     * @return int allowed loanlimit in form 0 or 1, 0 means sale amount is still in limit and 1 is over limit
+     * Get the total credit required.
+     *
+     * @param int $loanAmount lending amount
+     * @param float $establishmentFees establishmentFees
+     * @return float total credit allowed
      */
+    public
+    static function totalCreditRequired($loanAmount, $establishmentFees) {
+        $totalCreditRequired = (floatval($loanAmount) + floatval($establishmentFees));
 
-    public function getMaximumSaleAmount($getRates, $saleAmount)
-    {
-        $chkLoanlimit = 0;
-       
-        $keys = array_keys($getRates);
-
-        //print_r($keys);
-
-
-        for ($i = 0; $i < count($getRates); $i++) {
-            foreach ($getRates[$keys[$i]] as $key => $value) {
-                if ($key == 4) {
-                    $getVal[] = $value;
-                }
-            }
-        }
-
-        if (max($getVal) < $saleAmount) {
-            $chkLoanlimit = 1;
-        }
-
-        return $chkLoanlimit;
-    }
-
-    /**
-    * Get the total credit required
-    * @param int $loanAmount lending amount
-    * @param float $establishmentFees establishmentFees
-    * @return float total credit allowed
-    */
-
-
-    public static function TotalCreditRequired($LoanAmount, $establishmentFees)
-    {
-        $totalCreditRequired = (floatval($LoanAmount) + floatval($establishmentFees)) ;
         return number_format((float)$totalCreditRequired, 2, '.', '');
-    }
-
-    /**
-     * Insert the cancel order data in job queue
-     * @param varchar $planName
-     */
-
-    public function setCancelProcessQueue($planName)
-    {
-        $apiURL = "api/v1/setcancelStatusQueue";
-
-
-
-        $authToken = $this->DoApiCallPayright();
-        $getPayRightAccessToken = $authToken['payrightAccessToken'];
-
-
-
-        $getApiConfiguration = $this->DoApiTransactionConfCallPayright($getPayRightAccessToken);
-        $sugarToken = $getApiConfiguration['auth']['auth-token'];
-        
-        $returnArray = array();
-        $client = $this->_client->create();
-
-        $client->setUri($this->_sandBoxApiEndpoint.$apiURL);
-
-       
-
-        $client->setConfig(['timeout' => 15]);
-        $client->setHeaders(['Content-Type: application/json', 'Accept: application/json','Authorization:'.$getPayRightAccessToken]);
-
-        $paramsPayright = [
-            'authToken' => $sugarToken,
-            'planName' => $planName,
-            'clientId' => $this->getConfigValue('client_id')
-            ];
-       
-
-        $client->setParameterPost($paramsPayright);
-        $client->setMethod(\Zend_Http_Client::POST);
-
-        try {
-            $responseBody = $client->request()->getBody();
-            //$decodedData = $this->jsonHelper->jsonDecode($responseBody);
-        } catch (\Exception $e) {
-            echo "Error";
-            exit;
-        }
-    }
-
-
-    public function DoSendInitialTranscation($userId)
-    {
-        $apiURL = "api/v1/setinitialTransJob";
-
-        $authToken = $this->DoApiCallPayright();
-        $getPayRightAccessToken = $authToken['payrightAccessToken'];
-
-        $returnArray = array();
-        $client = $this->_client->create();
-
-        $client->setUri($this->_sandBoxApiEndpoint.$apiURL);
-
-
-        $client->setConfig(['timeout' => 15]);
-        $client->setHeaders(['Content-Type: application/json', 'Accept: application/json','Authorization:'.$getPayRightAccessToken]);
-
-        $paramsPayright = [
-            'userId' => $userId
-            ];
-
-        $client->setParameterPost($paramsPayright);
-        $client->setMethod(\Zend_Http_Client::POST);
-
-        try {
-            $responseBody = $client->request()->getBody();
-            //$decodedData = $this->jsonHelper->jsonDecode($responseBody);
-        } catch (\Exception $e) {
-            echo "Error";
-            exit;
-        }
-    }
-
-    public function DoApiTransactionConfCallPayright($authToken)
-    {
-        $apiURL = "api/v1/initialTransactionConfiguration";
-
-        $returnArray = array();
-
-        $client = $this->_client->create();
-        $client->setUri($this->_sandBoxApiEndpoint.$apiURL);
-        $client->setConfig(['timeout' => 15]);
-        $client->setHeaders(['Content-Type: application/json', 'Accept: application/json','Authorization:'.$authToken]);
-
-        $params = array(
-                "merchantusername" => $this->getConfigValue('merchantusername'),
-                "merchantpassword" => $this->getConfigValue('merchantpassword'),
-        );
-
-        $client->setParameterPost($params);
-        $client->setMethod(\Zend_Http_Client::POST);
-        
-
-        try {
-            $responseBody = $client->request()->getBody();
-            $decodedData = $this->jsonHelper->jsonDecode($responseBody);
-            if (!isset($decodedData['code']) && isset($decodedData['data']['auth'])) {
-                $returnArray['auth'] = $decodedData['data']['auth'];
-                $returnArray['configToken'] = $decodedData['data']['configToken'];
-                $returnArray['rates'] = $decodedData['data']['rates'];
-                $returnArray['conf'] = $decodedData['data']['conf'];
-                $returnArray['establishment_fee'] = $decodedData['data']['establishment_fee'];
-                return $returnArray;
-            } else {
-                return "Error";
-            }
-        } catch (\Exception $e) {
-            return "Error";
-        }
     }
 }

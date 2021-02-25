@@ -3,13 +3,12 @@
 namespace Payright\Payright\Observer;
 
 use \Magento\Framework\Json\Helper\Data as JsonHelper;
-use Payright\Payright\Model\Config\EnjoynowPaylater as PayrightConfig;
+use Payright\Payright\Model\Config\Payright as PayrightConfig;
 use Payright\Payright\Helper\Data as Helper;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Sales\Model\Order;
 
-class OrderData implements \Magento\Framework\Event\ObserverInterface
-{
+class OrderData implements \Magento\Framework\Event\ObserverInterface {
     protected $session;
     protected $_jsonHelper;
     protected $payrightConfig;
@@ -25,91 +24,47 @@ class OrderData implements \Magento\Framework\Event\ObserverInterface
         PayrightConfig $payrightConfig,
         \Magento\Framework\Session\SessionManagerInterface $session,
         Helper $payrightHelper,
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
-     ) {
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
+        \Payright\Payright\Model\Config\Payright $payrightConfig
+    ) {
         $this->payrightHelper = $payrightHelper;
         $this->_jsonHelper = $jsonHelper;
         $this->session = $session;
         $this->_client = $httpClientFactory;
         $this->jsonHelper = $jsonHelper;
         $this->_scopeConfig = $scopeConfig;
+        $this->_payrightConfig = $payrightConfig;
+        $this->_accessToken = $this->_payrightConfig->getAccessToken();
     }
 
     /**
      * Function to activate the plan if order status is complete
-     * @param  \Magento\Framework\Event\Observer $observer Pass the event that is mentioned in event.xml
+     *
+     * @param \Magento\Framework\Event\Observer $observer Pass the event that is mentioned in event.xml
      * @return Array Return the response of an API
      */
-    
-    public function execute(\Magento\Framework\Event\Observer $observer)
-    {
-   
-        
-        $PayRightPlanId = $observer->getEvent()->getOrder()->getpayrightplanid(); 
 
-        $statuscode = $observer->getEvent()->getOrder()->getStatus();
-   
+    public function execute(\Magento\Framework\Event\Observer $observer) {
 
-        if ($statuscode == \Magento\Sales\Model\Order::STATE_COMPLETE) {
-            $authToken = $this->payrightHelper->DoApiCallPayright();
-           
-            $getPayRightAccessToken = $authToken['payrightAccessToken'];
-            
-            // Get all the configuration for API call from ecommerce 
-            $getApiConfiguration = $this->payrightHelper->DoApiConfCallPayright($getPayRightAccessToken);
-            $sugarToken = $getApiConfiguration['auth']['auth-token'];
-            $configToken = $getApiConfiguration['configToken'];
-           
+        $payrightPlanId = $observer->getEvent()->getOrder()->getpayrightplanid();
+        $payrightPlanName = $observer->getEvent()->getOrder()->getpayrightplanname();
+        $payrightPlanCheckoutId = $observer->getEvent()->getOrder()->getpayrightcheckoutid();
 
+        $status = $observer->getEvent()->getOrder()->getStatus();
 
-            $apiURL = "api/v1/changePlanStatus";
-            $returnArray = array();
+        if ($status == \Magento\Sales\Model\Order::STATE_COMPLETE) {
 
-            $client = $this->_client->create();
-            $client->setUri($this->_sandBoxApiEndpoint.$apiURL);
+            $this->payrightHelper->activatePlan($payrightPlanCheckoutId);
 
-            $client->setConfig(['timeout' => 300]);
-            $client->setHeaders(['Content-Type: application/json', 'Accept: application/json','Authorization:'.$getPayRightAccessToken]);
+            $message = "<b>Your Plan " . $payrightPlanName . " has been activated.</b><br/><br/><br/><br/>";
 
+//            if ($decodedData['success'] == 1) {
+//                $message = "<b>Your Plan " . $payrightPlanName . " has been activated.</b><br/><br/><br/><br/>";
+//            } else {
+//                $message = "<b>There is some problem in activation of your plan. Please contact at support@payright.com.au.</b><br/><br/><br/>";
+//            }
 
-            //plan_id = "C006218_021";
-            $PayRightPlanId = $observer->getEvent()->getOrder()->getpayrightplanid(); 
-            $PayRightPlanName = $observer->getEvent()->getOrder()->getpayrightplanname(); 
-
-
-
-            $paramsPayright = [
-                'Token' => $sugarToken,
-                'ConfigToken' =>  $configToken,
-                'id' => $PayRightPlanId,
-                'status'=> 'Active'
-            ];
-
-        
-
-            $client->setParameterPost($paramsPayright);
-            $client->setMethod(\Zend_Http_Client::POST);
-
-            try {
-                $responseBody = $client->request()->getBody();
-                $decodedData = $this->jsonHelper->jsonDecode($responseBody);
-                // var_dump($decodedData);
-                // die();
-
-                $returnArray = $decodedData['data'];
-                if ($decodedData['success'] == 1) {
-                    $message = "<b>Your Plan ".$returnArray['name']. " has been activated.</b><br/><br/><br/><br/>";
-                    return $message; 
-                    // print $message;
-                } else {
-                    $message = "<b>There is some problem in activation of your plan. Please contact at support@payright.com.au.</b><br/><br/><br/>";
-                    return $message;
-                    // print $message;
-                }
-            } catch (\Exception $e) {
-                 $message = "<b>There is some problem in activation of your plan. Please contact at support@payright.com.au.</b><br/><br/><br/>";
-                 return $message;
-            }
+            return $message;
         }
     }
 }

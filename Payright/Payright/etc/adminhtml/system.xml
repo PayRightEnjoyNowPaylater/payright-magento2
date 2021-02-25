@@ -5,110 +5,85 @@
  * See COPYING.txt for license details.
  */
 -->
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../Config/etc/system_file.xsd">
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../Config/etc/system_file.xsd">
     <system>
         <section id="payment">
-            <group id="mypayright" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+            <group id="payright" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
                 <label>Payright</label>
-                <comment><![CDATA[<strong><img id="adminpayright"/>
-                <p>Enjoy now,pay later! <a href="https://www.payright.com.au/merchants/" target="_blank">Register here</a></p>]]></comment>
-                <field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0">
+                <comment>
+                    <![CDATA[<strong><img id="adminpayright"/>
+                    <p>Enjoy now, pay later! <a href="http://merchant.payright.com.au/" target="_blank">Register here</a></p>]]>
+                </comment>
+                <field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1"
+                       showInStore="0">
                     <label>Enabled</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="sandbox" translate="label" type="select" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="0">
+                <field id="sandbox" translate="label" type="select" sortOrder="2" showInDefault="1" showInWebsite="1"
+                       showInStore="0">
                     <label>Sandbox</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                 <field id="title" translate="label" type="text" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="title" translate="label" type="text" sortOrder="7" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
                     <label>Title</label>
                 </field>
-                <field id="user_name" translate="label" type="text" sortOrder="9" showInDefault="1" showInWebsite="0" showInStore="1">
-                    <label>User Name</label>
+                <field id="accesstoken" translate="label" type="text" sortOrder="8" showInDefault="1"
+                       showInWebsite="0" showInStore="1">
+                    <label>Access Token</label>
                 </field>
-                <field id="password" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="1">
-                    <label>Password</label>
+                <field id="region" translate="label" type="select" sortOrder="9" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>Region</label>
+                    <source_model>Payright\Payright\Model\Config\Source\Region</source_model>
                 </field>
-               
-                <field id="client_secret" translate="label" type="text" sortOrder="12" showInDefault="1" showInWebsite="0" showInStore="1">
-                    <label>API Key</label>
-                </field>
-
-                <field id="client_id" translate="label" type="text" sortOrder="13" showInDefault="1" showInWebsite="0" showInStore="1">
-                    <label>Client ID</label>
-                </field>
-
-                <field id="merchantusername" translate="label" type="text" sortOrder="14" showInDefault="1" showInWebsite="0" showInStore="1">
-                    <label>Merchant User Name</label>
-                </field>
-                <field id="merchantpassword" translate="label" type="text" sortOrder="15" showInDefault="1" showInWebsite="0" showInStore="1">
-                    <label>Merchant Password</label>
-                </field>
-               
-               
-                 <field id="minamount" translate="label" type="text" sortOrder="18" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="minamount" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
                     <label>Minimum Amount</label>
                 </field>
-       
-
-                <field id="payrightshowpriceproduct" translate="label" type="select" sortOrder="22" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Show Payright Installments information on Product Page</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field>
-
-                 <field id="payrightshowpricecategory" translate="label" type="select" sortOrder="23" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Show Payright Installments information on Category Page</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field>
-                 <field id="modaloption" translate="label" type="select" sortOrder="24" showInDefault="1" showInWebsite="1" showInStore="1">
-                     <label>Modal Option</label>
-                     <source_model>Payright\Payright\Model\Config\Source\Options</source_model>
-                 </field>
-                <field id="minicart" translate="label" type="select" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1">
-                     <label>Show Payright Installments information on Mini Cart</label>
-                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                 </field>
-                 <field id="bestsellerinstalmemts" translate="label" type="select" sortOrder="26" showInDefault="1" showInWebsite="1" showInStore="1">
-                     <label>Show Payright Installments information on Bestseller Products</label>
-                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                 </field>
-                 <field id="crosssellinstalments" translate="label" type="select" sortOrder="27" showInDefault="1" showInWebsite="1" showInStore="1">
-                     <label>Show Payright Installments information on Crosssell Products</label>
-                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                 </field>
-                 <field id="relatedinstalments" translate="label" type="select" sortOrder="28" showInDefault="1" showInWebsite="1" showInStore="1">
-                     <label>Show Payright Installments information on Related Products</label>
-                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                 </field>
-                 <field id="upsellinstalments" translate="label" type="select" sortOrder="29" showInDefault="1" showInWebsite="1" showInStore="1">
-                     <label>Show Payright Installments information on Upsell Products</label>
-                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                 </field>
-
-                <field id="fixed_country" translate="label" type="label" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
-                   <label>Payment from Applicable Country</label>
-                 </field>
-              
-                <field id="instructions_data" translate="label" type="label" sortOrder="21" showInDefault="1" showInWebsite="0" showInStore="0">
+                <field id="instructions_data" translate="label" type="label" sortOrder="21" showInDefault="1"
+                       showInWebsite="0" showInStore="0">
                     <label>Instructions</label>
-                    
                 </field>
-          
-               
-
+                <field id="payrightshowpriceproduct" translate="label" type="select" sortOrder="22" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Product Page</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="payrightshowpricecategory" translate="label" type="select" sortOrder="23" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Category Page</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="minicart" translate="label" type="select" sortOrder="25" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>Mini Cart</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="bestsellerinstalments" translate="label" type="select" sortOrder="26" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Bestseller Products</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="crosssellinstalments" translate="label" type="select" sortOrder="27" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Crosssell Products</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="relatedinstalments" translate="label" type="select" sortOrder="28" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Related Products</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="upsellinstalments" translate="label" type="select" sortOrder="29" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Upsell Products</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
             </group>
             <!-- payment-group -->
         </section>
     </system>
-<!--     <global>
-        <sales>
-            <order>
-                <statuses>
-                    <complete translate="label"><label>Order Shipped</label></complete>
-                </statuses>
-            </order>
-        </sales>
-    </global> -->
-
-
 </config>

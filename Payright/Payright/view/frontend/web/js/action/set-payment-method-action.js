@@ -20,7 +20,6 @@ define(
         //         console.log(quote.getCalculatedTotal());
         //         console.log(window.checkoutConfig);
 
-              
 
         //         $.ajax({
         //             url: url,
@@ -32,7 +31,6 @@ define(
         //                  body.loader('hide'); 
         //             }
         //         });
-
 
 
         // }

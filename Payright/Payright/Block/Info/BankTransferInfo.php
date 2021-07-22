@@ -1,8 +1,11 @@
 <?php
 
 namespace Payright\Payright\Block\Info;
+
 /**
- * Block for Bank Transfer payment method form
+ * Class BankTransferInfo
+ *
+ * @package Payright\Payright\Block\Info
  */
 class BankTransferInfo extends \Magento\Sales\Block\Adminhtml\Order\View {
     protected $_bankTransfer;
@@ -21,6 +24,5 @@ class BankTransferInfo extends \Magento\Sales\Block\Adminhtml\Order\View {
         $this->_bankTransfer = $bankTransfer;
         parent::__construct($context, $registry, $salesConfig, $reorderHelper, $data);
     }
-
 
 }

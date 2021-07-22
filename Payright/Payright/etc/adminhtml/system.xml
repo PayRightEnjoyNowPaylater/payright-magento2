@@ -13,7 +13,7 @@
                    showInStore="1">
                 <label>Payright</label>
                 <comment>
-                    <![CDATA[<strong><img id="adminpayright"/>
+                    <![CDATA[<strong><img id="admin-payright"/>
                     <p>Enjoy now, pay later! <a href="http://merchant.payright.com.au/" target="_blank">Register here</a></p>]]>
                 </comment>
                 <field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1"

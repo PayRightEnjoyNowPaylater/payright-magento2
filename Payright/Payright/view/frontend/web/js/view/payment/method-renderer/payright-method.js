@@ -69,12 +69,12 @@ define(
                     success: function (response) {
 
                         if (response != 'exceed_amount' && response != 'APIError') {
-                            $('#ppInstallmentText').html(response.numberOfRepayments);
-                            $('#ppInstallmentAmount').html("$ " + response.loanAmountPerPayment);
-                            $('#payrightmargin').html(response.numberOfRepayments + " " + response.repaymentFrequency + " Instalments of $" + response.loanAmountPerPayment);
-                            $('#payrightBlock').show();
+                            $('#payright-installment-text').html(response.numberOfRepayments);
+                            $('#payright-installment-amount').html("$ " + response.loanAmountPerPayment);
+                            $('.payright-margin').html(response.numberOfRepayments + " " + response.repaymentFrequency + " Instalments of $" + response.loanAmountPerPayment);
+                            $('#payright-block').show();
                         } else {
-                            $('#payrightBlock').hide();
+                            $('#payright-block').hide();
                         }
 
                         /// hide the pre-loader
@@ -85,7 +85,7 @@ define(
             },
             adjustTitle: function () {
                 // this is to adjust the title
-                let bodyWidth = document.getElementById("bodybox").offsetWidth;
+                let bodyWidth = document.getElementById("body-container").offsetWidth;
                 let width = document.getElementById("circleArrow").offsetWidth;
                 let title = document.getElementById("installmentTitle");
 

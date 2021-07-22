@@ -6,6 +6,12 @@ use Payright\Payright\Helper\Data as Helper;
 use Payright\Payright\Model\Config\Payright as PayrightConfig;
 
 // ini_set("display_errors", "0");
+
+/**
+ * Class RelatedProducts
+ *
+ * @package Payright\Payright\Plugin
+ */
 class RelatedProducts {
     protected $product;
     protected $payrightConfig;
@@ -14,6 +20,15 @@ class RelatedProducts {
     protected $session;
     protected $_catalogSession;
 
+    /**
+     * RelatedProducts constructor.
+     *
+     * @param  \Payright\Payright\Model\Config\Payright  $payrightConfig
+     * @param  \Payright\Payright\Helper\Data  $payrightHelper
+     * @param  \Magento\Framework\App\Config\ScopeConfigInterface  $scopeConfig
+     * @param  \Magento\Catalog\Model\Session  $catalogSession
+     * @param  \Magento\Framework\Session\SessionManagerInterface  $session
+     */
     public function __construct(
         PayrightConfig $payrightConfig,
         Helper $payrightHelper,
@@ -27,7 +42,15 @@ class RelatedProducts {
         $this->session = $session;
     }
 
-    public function aftergetProductPrice(\Magento\Catalog\Block\Product\ProductList\Related $subject, $result, \Magento\Catalog\Model\Product $product) {
+    /**
+     * Get product price.
+     *
+     * @param  \Magento\Catalog\Block\Product\ProductList\Related  $subject
+     * @param $result
+     * @param  \Magento\Catalog\Model\Product  $product
+     * @return mixed|string
+     */
+    public function afterGetProductPrice(\Magento\Catalog\Block\Product\ProductList\Related $subject, $result, \Magento\Catalog\Model\Product $product) {
         $finalPrice = $product->getFinalPrice();
         // $instalments = $this->payrightHelper->calculateSingleProductInstallment($finalPrice);
         $productType = $product->getTypeID();
@@ -54,6 +77,12 @@ class RelatedProducts {
         }
     }
 
+    /**
+     * Get configuration field, by global use.
+     *
+     * @param $field
+     * @return mixed
+     */
     public function getConfigValue($field) {
         return $this->scopeConfig->getValue('payment/payright/' . $field);
     }

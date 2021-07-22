@@ -4,36 +4,39 @@
  * See COPYING.txt for license details.
  */
 -->
-<div class="payment-method" data-bind="css: {'_active': (getCode() == isChecked())}" id="payrightBlock"
+<div class="payment-method" data-bind="css: {'_active': (getCode() == isChecked())}" id="payright-block"
      style="display: none;">
     <div class="payment-method-title field choice">
         <input type="radio"
                name="payment[method]"
                class="radio"
                data-bind="attr: {'id': getCode()}, value: getCode(), checked: isChecked, click: selectPaymentMethod, visible: isRadioButtonVisible()"/>
-        <img id="payrightcheckout"/>
+        <img id="payright-checkout"/>
         <label data-bind="attr: {'for': getCode()}" class="label"><span data-bind="text: getTitle()"></span></label>
-        <!--     <span data-bind="text: adjustTitle()"></span> -->
+        <!-- <span data-bind="text: adjustTitle()"></span> -->
         <p data-bind="text: getPayrightInstallmentText()"></p>
-        <div class="payRight_container_cart">
+        <div class="payright-container-cart">
 
             <article>
-                <div class="payRight_columns installments">
-                    <div class="insideColumns payRight_is-5 installments">
-                        <!--     <h2 class="payRightH2 paymentstitle" id="payrightmargin">24 Fortnightly<br/>Installments of $500</h2> -->
-                        <h2 class="payRightH2 paymentstitle" id="payrightmargin"></h2>
-                        <p class="payRightPayment" id="payrightdeposit">Excluding deposit</p>
+                <div class="payright-columns installments">
+                    <div class="insideColumns payright-is-5 installments">
+                        <!-- <h2 class="payright-h2 payright-payments-title payright-margin">24 Fortnightly<br/>Installments of $500</h2> -->
+                        <h2 class="payright-h2 payright-payments-title payright-margin"></h2>
+                        <p class="payright-payment payright-deposit">Excluding deposit</p>
                     </div>
                 </div>
             </article>
 
             <article>
-                <div class="payRight_columns installments">
-                    <div class="insideColumns payRight_is-8">
-                        <p class="payRightPayment" id="payrightdeposit">You will be directed to the Payright website to
-                            complete the application process.<br/>Once approved you will return to our page<br/>See <a
-                                    href="https://www.payright.com.au/terms-of-use/" target=" ">Payright terms &
-                                conditions</a> for further information.</p>
+                <div class="payright-columns installments">
+                    <div class="insideColumns payright-is-8">
+                        <p class="payright-payment payright-deposit">
+                            You will be directed to the Payright website to complete the application process.
+                            <br/>
+                            Once approved you will return to our page
+                            <br/>
+                            See <a href="https://www.payright.com.au/terms-of-use/" target=" ">Payright terms & conditions</a> for further information.
+                        </p>
                     </div>
                 </div>
             </article>

@@ -108,7 +108,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper {
     }
 
     /**
-     *
+     * Get configuration field, by store.
      *
      * @param $field
      * @return mixed

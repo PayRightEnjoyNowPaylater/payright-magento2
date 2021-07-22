@@ -7,6 +7,11 @@ use Payright\Payright\Model\Config\Payright as PayrightConfig;
 
 ini_set("display_errors", "0");
 
+/**
+ * Class CrosssellProducts
+ *
+ * @package Payright\Payright\Plugin
+ */
 class CrosssellProducts {
     protected $product;
     protected $payrightConfig;
@@ -14,6 +19,14 @@ class CrosssellProducts {
     protected $payrightHelper;
     protected $session;
 
+    /**
+     * CrosssellProducts constructor.
+     *
+     * @param  \Payright\Payright\Model\Config\Payright  $payrightConfig
+     * @param  \Payright\Payright\Helper\Data  $payrightHelper
+     * @param  \Magento\Framework\App\Config\ScopeConfigInterface  $scopeConfig
+     * @param  \Magento\Framework\Session\SessionManagerInterface  $session
+     */
     public function __construct(
         PayrightConfig $payrightConfig,
         Helper $payrightHelper,
@@ -26,7 +39,15 @@ class CrosssellProducts {
         $this->session = $session;
     }
 
-    public function aftergetProductPrice(\Magento\Checkout\Block\Cart\Crosssell $subject, $result, \Magento\Catalog\Model\Product $product) {
+    /**
+     * Get product price.
+     *
+     * @param  \Magento\Checkout\Block\Cart\Crosssell  $subject
+     * @param $result
+     * @param  \Magento\Catalog\Model\Product  $product
+     * @return mixed|string
+     */
+    public function afterGetProductPrice(\Magento\Checkout\Block\Cart\Crosssell $subject, $result, \Magento\Catalog\Model\Product $product) {
         $finalPrice = $product->getFinalPrice();
         $productType = $product->getTypeID();
 
@@ -52,6 +73,12 @@ class CrosssellProducts {
         }
     }
 
+    /**
+     * Get configuration field, by global use.
+     *
+     * @param $field
+     * @return mixed
+     */
     public function getConfigValue($field) {
         return $this->scopeConfig->getValue('payment/payright/' . $field);
     }

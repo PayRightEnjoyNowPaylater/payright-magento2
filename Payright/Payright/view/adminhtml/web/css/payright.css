@@ -1,4 +1,4 @@
-#prlogo {
+#payright-logo {
     content: url('images/payrightlogo_rgb.png');
     max-height: 30px;
     /*max-width: 40%;*/
@@ -6,12 +6,12 @@
 
 }
 
-#payrightcheckout {
+#payright-checkout {
     content: url('images/payrightlogo_rgb.png');
 
 }
 
-#adminpayright {
+#admin-payright {
     content: url('images/payrightlogo_rgb.png');
     max-height: 100px;
 }

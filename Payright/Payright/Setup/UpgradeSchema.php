@@ -20,10 +20,11 @@ class UpgradeSchema implements UpgradeSchemaInterface {
     /**
      * @var QuoteSetupFactory
      */
-
     protected $quoteSetupFactory;
 
     /**
+     * UpgradeSchema constructor
+     *
      * @param SalesSetupFactory $salesSetupFactory
      * @param QuoteSetupFactory $quoteSetupFactory
      */
@@ -33,25 +34,17 @@ class UpgradeSchema implements UpgradeSchemaInterface {
     }
 
 
+    /**
+     * Plugin upgrade operations
+     *
+     * @param  \Magento\Framework\Setup\SchemaSetupInterface  $setup
+     * @param  \Magento\Framework\Setup\ModuleContextInterface  $context
+     */
     public function upgrade(SchemaSetupInterface $setup, ModuleContextInterface $context) {
-        /**
-         * Prepare database for upgrade
-         */
         $setup->startSetup();
 
-        if (version_compare($context->getVersion(), "1.0.0", "<")) {
-//        $setup->getConnection()->addColumn(
-//            $setup->getTable('sales_order'),
-//            'payrightplanid',
-//            [
-//                'type' => 'text',
-//                'nullable' => true,
-//                'comment' => 'Bank',
-//            ]
-//        );
-        }
-        if (version_compare($context->getVersion(), '1.0.1', '<')) {
-            // Your upgrade script
+        if (version_compare($context->getVersion(), '2.0.2', '=')) {
+            // Do nothing
         }
 
         $setup->endSetup();

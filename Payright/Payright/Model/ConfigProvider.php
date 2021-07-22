@@ -29,32 +29,4 @@ class ConfigProvider implements ConfigProviderInterface {
     public function __construct(\Payright\Payright\Model\Config\Payright $config) {
         $this->payrightConfig = $config;
     }
-
-    /**
-     * Get config set on JS global variable window.checkoutConfig
-     *
-     * @return array
-     */
-    public function getConfig() {
-        // set default array
-        $config = [];
-
-        /**
-         * adding config array
-         */
-        // $config = array_merge_recursive($config, [
-        //     'payment' => [
-        //         'afterpay' => [
-        //             'afterpayJs'        => $this->afterpayConfig->getWebUrl('afterpay.js'),
-        //             'afterpayReturnUrl' => 'afterpay/payment/response',
-        //             'redirectMode'      => $this->afterpayConfig->getCheckoutMode(),
-        //             'paymentAction'     => $this->afterpayConfig->getPaymentAction(),
-        //             'termsConditionUrl' => self::TERMS_CONDITION_LINK,
-        //             'currencyCode'     => $this->afterpayConfig->getCurrencyCode(),
-        //         ],
-        //     ],
-        // ]);
-
-        return $config;
-    }
 }

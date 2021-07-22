@@ -1,10 +1,4 @@
 <?php
-/**
- * Magento 2 extensions for Afterpay Payment
- *
- * @author Afterpay
- * @copyright 2016-2018 Afterpay https://www.payright.com.au
- */
 
 namespace Payright\Payright\Model;
 
@@ -27,5 +21,4 @@ class Response {
     const RESPONSE_STATUS_DECLINED = 'DECLINED';
 
     const RESPONSE_APPROVED_PENDING_ID = 'APPROVED_PENDING_ID';
-
 }

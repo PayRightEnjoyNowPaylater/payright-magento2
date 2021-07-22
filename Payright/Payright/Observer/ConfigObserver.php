@@ -6,11 +6,24 @@ use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\Event\Observer as EventObserver;
 use Payright\Payright\Helper\Data as Helper;
 
+/**
+ * Class ConfigObserver
+ *
+ * @package Payright\Payright\Observer
+ */
 class ConfigObserver implements ObserverInterface {
 
     protected $_payrightConfig;
     public $_accessToken;
 
+    /**
+     * ConfigObserver constructor.
+     *
+     * @param  \Magento\Framework\App\Config\ScopeConfigInterface  $scopeConfig
+     * @param  \Payright\Payright\Helper\Data  $payrightHelper
+     * @param  \Magento\Framework\Message\ManagerInterface  $messageManager
+     * @param  \Payright\Payright\Model\Config\Payright  $payrightConfig
+     */
     public function __construct(
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         Helper $payrightHelper,
@@ -24,6 +37,11 @@ class ConfigObserver implements ObserverInterface {
         $this->_accessToken = $this->_payrightConfig->getAccessToken();
     }
 
+    /**
+     * To execute Observer operations.
+     *
+     * @param  \Magento\Framework\Event\Observer  $observer
+     */
     public function execute(\Magento\Framework\Event\Observer $observer) {
         $data = $this->payrightHelper->performApiGetRates();
         $isInvalidAccessToken = isset($data['status']) && isset($data['message']);

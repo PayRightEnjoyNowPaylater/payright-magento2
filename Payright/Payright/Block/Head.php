@@ -4,6 +4,11 @@ namespace Payright\Payright\Block;
 
 use Magento\Framework\View\Element\Template;
 
+/**
+ * Class Head
+ *
+ * @package Payright\Payright\Block
+ */
 class Head extends Template {
     /**
      * @var \Magento\Framework\View\Asset\Repository
@@ -25,15 +30,14 @@ class Head extends Template {
     }
 
     /**
-     *
+     * Get custom CSS.
      *
      * @return string
      */
     public function getCustomCSS() {
         $asset_repository = $this->assetRepository;
         $asset = $asset_repository->createAsset('Payright_Payright::css/payright.css');
-        $url = $asset->getUrl();
 
-        return $url;
+        return $asset->getUrl();
     }
 }

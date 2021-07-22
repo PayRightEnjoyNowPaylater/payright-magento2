@@ -10,7 +10,9 @@ use Magento\Framework\Setup\SchemaSetupInterface;
  * @codeCoverageIgnore
  */
 class InstallSchema implements InstallSchemaInterface {
+
     /**
+     * Plugin installation operations
      *
      * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */

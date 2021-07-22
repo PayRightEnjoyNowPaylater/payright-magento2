@@ -12,6 +12,11 @@ use Payright\Payright\Helper\Data as Helper;
 
 // ini_set("display_errors", "0");
 
+/**
+ * Class Display
+ *
+ * @package Payright\Payright\Block\Catalog
+ */
 class Display extends \Magento\Framework\View\Element\Template {
 
     protected $product;
@@ -59,7 +64,7 @@ class Display extends \Magento\Framework\View\Element\Template {
     }
 
     /**
-     *
+     * Get installment amount.
      *
      * @return string|void
      */
@@ -85,19 +90,30 @@ class Display extends \Magento\Framework\View\Element\Template {
 
     }
 
+    /**
+     * Check if product page installment text is active.
+     *
+     * @return mixed
+     */
     public function IsProductPageInstallmentTextActive() {
         return $this->payrightConfig->isProductInstallmentsShow();
     }
 
+    /**
+     * Get product page installment text.
+     *
+     * @return mixed
+     */
     public function getProductInstallmentText() {
         return "test";
     }
 
+    /**
+     * Get merchant name configuration field.
+     *
+     * @return mixed
+     */
     public function getConfigMerchantName() {
         return $this->payrightConfig->getMerchantName();
     }
-
-//    public function getModal() {
-//        return $this->payrightConfig->getOption();
-//    }
 }

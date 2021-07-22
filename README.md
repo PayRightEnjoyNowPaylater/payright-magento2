@@ -1,5 +1,11 @@
 # payright-magento2
-PayRight "payment method" plugin for Magento v2.x.x platform.
+The Payright plugin for Magento v2.x.x platform.
+
+Give your customers the option to pay in convenient zero-interest instalments.
+
+Payright helps turn ‘too much’ into ‘too easy’ by spreading the cost of purchases over time. The "Payright" plugin provides the option to choose Payright as the payment method at the checkout.
+
+It also provides the functionality to display the Payright logo and instalment calculations below product prices on category pages, individual product pages, home pages and on the checkout page. For each payment that is approved by Payright, an order will be created inside the Magento 2 platform like any other order. Payright plans will activate once a product is shipped.
 
 ## Installation
 This section outlines the steps to install the Payright plugin for the first time.

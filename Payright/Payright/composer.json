@@ -1,9 +1,15 @@
 {
   "name": "payright/payright",
-  "description": "The Payright plugin for Magento 2",
+  "description": "The Payright module for Magento v2.x.x",
   "version": "2.0.2",
   "type": "magento2-module",
   "license": "GPL-3.0",
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/PayRightEnjoyNowPaylater/payright-magento2"
+    }
+  ],
   "authors": [
     {
       "name": "Brian Ng",

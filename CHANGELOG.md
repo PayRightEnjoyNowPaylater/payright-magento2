@@ -23,6 +23,7 @@ This is a `optional` release to download and update your plugin version with.
 
 ## Added
 1. Feature: Added new `composer.json` file. Please note, **NOT READY** for use at Magento Marketplace, see `README.md` for more information.
+2. Feature: Added new plugin configuration "Display Term", to toggle between showing suggested "Weekly" or "Fortnightly" rates on Magento 2 store.
 ## Changed
 1. Refactor: Major codebase refactoring - CSS classes, phpdoc comments and HTML updates for new classes / ids.
 

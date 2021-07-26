@@ -306,6 +306,10 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper {
         $calculatedNumberOfRepayments = $getPaymentFrequency['numberOfRepayments'];
         $calculatedAccountKeepingFees = $getPaymentFrequency['accountKeepingFees'];
 
+        // Get Display Term configurations
+        $getDisplayTerm = $getPaymentFrequency['displayTerm'];
+        $getDisplayTermAsNoun = $getPaymentFrequency['displayTermToNoun'];
+
         // For 'total credit required' output. Format the 'loan amount', into currency format.
         $formattedLoanAmount = number_format((float)$loanAmount, 2, '.', '');
 
@@ -329,7 +333,8 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper {
         $dataResponseArray['paymentProcessingFee'] = $paymentProcessingFee;
         $dataResponseArray['saleAmount'] = $saleAmount;
         $dataResponseArray['numberOfRepayments'] = $calculatedNumberOfRepayments;
-        $dataResponseArray['repaymentFrequency'] = 'Fortnightly';
+        $dataResponseArray['repaymentFrequency'] = $getDisplayTerm; // Weekly, Fortnightly
+        $dataResponseArray['repaymentFrequencyAsNoun'] = $getDisplayTermAsNoun; // week, fortnight
         $dataResponseArray['loanAmountPerPayment'] = $calculateRepayments;
 
         return $dataResponseArray;
@@ -416,7 +421,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper {
      * @return mixed
      */
     public function getPaymentFrequency($accountKeepingFee, $loanTerm) {
-        $repaymentFrequency = 'Fortnightly';
+        $repaymentFrequency = $this->scopeConfig->getValue('payment/payright/displayterm');
 
         if ($repaymentFrequency == 'Weekly') {
             $j = floor($loanTerm * (52 / 12));
@@ -441,6 +446,8 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper {
 
         $returnArray['numberOfRepayments'] = $numberOfRepayments;
         $returnArray['accountKeepingFees'] = round($accountKeepingFee, 2);
+        $returnArray['displayTerm'] = $repaymentFrequency; // Weekly, Fortnightly
+        $returnArray['displayTermToNoun'] = strtolower(substr($repaymentFrequency, 0, -2)); // week, fortnight
 
         return $returnArray;
     }

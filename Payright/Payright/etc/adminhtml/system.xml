@@ -14,7 +14,8 @@
                 <label>Payright</label>
                 <comment>
                     <![CDATA[<strong><img id="admin-payright"/>
-                    <p>Enjoy now, pay later! <a href="http://merchant.payright.com.au/" target="_blank">Register here</a></p>]]>
+                    <p>Enjoy now, pay later! <a href="https://merchant.payright.com.au/" target="_blank">Register here</a></p>
+                    <p>Register at Payright Developer Portal, <a href="https://developers.payright.com.au/" target="_blank">click here</a></p>]]>
                 </comment>
                 <field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1"
                        showInStore="0">

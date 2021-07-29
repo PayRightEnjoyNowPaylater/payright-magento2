@@ -15,7 +15,7 @@ Please follow the steps below for installation and configuration setup.
 >  [MAGENTO] refers to the installed Magento file directory. For example, `/var/www/magento2`.
 
 ### Requirements
-+ Access Token - A 'sandbox access token', or 'production access token'.
++ Access Token - A 'sandbox access token', or 'production access token'. A 'required' field.
 
 > Create a Payright Developer account at Payright Developer Portal (https://developers.payright.com.au).
 > Enter e-mail address to sign up. Use the received sign-in e-mail, with unique login link to authenticate.
@@ -28,9 +28,10 @@ Please follow the steps below for installation and configuration setup.
 4. Open your command-line interface (CLI).
 5. In command-line interface (CLI), run the below command(s) to install & enable the Payright module:  
     ```
+    php bin/magento cache:disable
     php bin/magento setup:upgrade
     php bin/magento setup:static-content:deploy
-    php bin/magento cache:clear
+    php bin/magento cache:enable
     ```
    
 > Tip: If `php bin/magento cache:clear` is causing issues, "disable cache" first then "re-enable cache" 

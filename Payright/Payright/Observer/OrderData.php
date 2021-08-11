@@ -16,11 +16,11 @@ use Magento\Sales\Model\Order;
 class OrderData implements \Magento\Framework\Event\ObserverInterface {
     protected $session;
     protected $_jsonHelper;
-    protected $payrightConfig;
+    protected $_payrightConfig;
     protected $payrightHelper;
-    protected $_sandBoxApiEndpoint = 'https://api.payright.com.au/';
     protected $_client;
     protected $_scopeConfig;
+    protected $_accessToken;
 
     /**
      * OrderData constructor.
@@ -46,7 +46,7 @@ class OrderData implements \Magento\Framework\Event\ObserverInterface {
         $this->_jsonHelper = $jsonHelper;
         $this->session = $session;
         $this->_client = $httpClientFactory;
-        $this->jsonHelper = $jsonHelper;
+        $this->_jsonHelper = $jsonHelper;
         $this->_scopeConfig = $scopeConfig;
         $this->_payrightConfig = $payrightConfig;
         $this->_accessToken = $this->_payrightConfig->getAccessToken();

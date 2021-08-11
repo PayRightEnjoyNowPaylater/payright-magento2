@@ -18,5 +18,8 @@ class Displayterm implements \Magento\Framework\Option\ArrayInterface {
         ];
     }
 
+    public function aftertoOptionArray($OptionsArray)
+    {
 
+    }
 }

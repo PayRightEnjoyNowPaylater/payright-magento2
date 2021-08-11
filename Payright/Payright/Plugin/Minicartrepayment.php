@@ -5,11 +5,23 @@ namespace Payright\Payright\Plugin;
 use Payright\Payright\Helper\Data as Helper;
 use Payright\Payright\Model\Config\Payright as PayrightConfig;
 
+/**
+ * Class Minicartrepayment
+ *
+ * @package Payright\Payright\Plugin
+ */
 class Minicartrepayment {
 
     protected $payrightHelper;
     protected $scopeConfig;
 
+    /**
+     * Minicartrepayment constructor.
+     *
+     * @param  \Payright\Payright\Helper\Data  $payrightHelper
+     * @param  \Payright\Payright\Model\Config\Payright  $payrightConfig
+     * @param  \Magento\Framework\App\Config\ScopeConfigInterface  $scopeConfig
+     */
     public function __construct(
         Helper $payrightHelper,
         PayrightConfig $payrightConfig,
@@ -20,7 +32,13 @@ class Minicartrepayment {
         $this->scopeConfig = $scopeConfig;
     }
 
-
+    /**
+     * Get section data.
+     *
+     * @param  \Magento\Checkout\CustomerData\Cart  $subject
+     * @param  array  $result
+     * @return array
+     */
     public function afterGetSectionData(\Magento\Checkout\CustomerData\Cart $subject, array $result) {
 
         // $cart = $this->getConfigValue('minicart');
@@ -47,6 +65,12 @@ class Minicartrepayment {
         return $result;
     }
 
+    /**
+     * Get configuration field, by global use.
+     *
+     * @param $field
+     * @return mixed
+     */
     public function getConfigValue($field) {
         return $this->scopeConfig->getValue('payment/payright/' . $field);
     }

@@ -8,16 +8,31 @@ use Payright\Payright\Helper\Data as Helper;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Sales\Model\Order;
 
+/**
+ * Class OrderData
+ *
+ * @package Payright\Payright\Observer
+ */
 class OrderData implements \Magento\Framework\Event\ObserverInterface {
     protected $session;
     protected $_jsonHelper;
-    protected $payrightConfig;
+    protected $_payrightConfig;
     protected $payrightHelper;
-    protected $_sandBoxApiEndpoint = 'https://api.payright.com.au/';
     protected $_client;
     protected $_scopeConfig;
+    protected $_accessToken;
 
-
+    /**
+     * OrderData constructor.
+     *
+     * @param  \Magento\Framework\HTTP\ZendClientFactory  $httpClientFactory
+     * @param  \Magento\Framework\Json\Helper\Data  $jsonHelper
+     * @param  \Payright\Payright\Model\Config\Payright  $payrightConfig
+     * @param  \Magento\Framework\Session\SessionManagerInterface  $session
+     * @param  \Payright\Payright\Helper\Data  $payrightHelper
+     * @param  \Magento\Framework\App\Config\ScopeConfigInterface  $scopeConfig
+     * @param  \Payright\Payright\Model\Config\Payright  $payrightConfig
+     */
     public function __construct(
         \Magento\Framework\HTTP\ZendClientFactory $httpClientFactory,
         \Magento\Framework\Json\Helper\Data $jsonHelper,
@@ -31,7 +46,7 @@ class OrderData implements \Magento\Framework\Event\ObserverInterface {
         $this->_jsonHelper = $jsonHelper;
         $this->session = $session;
         $this->_client = $httpClientFactory;
-        $this->jsonHelper = $jsonHelper;
+        $this->_jsonHelper = $jsonHelper;
         $this->_scopeConfig = $scopeConfig;
         $this->_payrightConfig = $payrightConfig;
         $this->_accessToken = $this->_payrightConfig->getAccessToken();
@@ -41,9 +56,8 @@ class OrderData implements \Magento\Framework\Event\ObserverInterface {
      * Function to activate the plan if order status is complete
      *
      * @param \Magento\Framework\Event\Observer $observer Pass the event that is mentioned in event.xml
-     * @return Array Return the response of an API
+     * Return the response of an API
      */
-
     public function execute(\Magento\Framework\Event\Observer $observer) {
 
         $payrightPlanId = $observer->getEvent()->getOrder()->getpayrightplanid();
@@ -56,15 +70,8 @@ class OrderData implements \Magento\Framework\Event\ObserverInterface {
 
             $this->payrightHelper->activatePlan($payrightPlanCheckoutId);
 
-            $message = "<b>Your Plan " . $payrightPlanName . " has been activated.</b><br/><br/><br/><br/>";
-
-//            if ($decodedData['success'] == 1) {
-//                $message = "<b>Your Plan " . $payrightPlanName . " has been activated.</b><br/><br/><br/><br/>";
-//            } else {
-//                $message = "<b>There is some problem in activation of your plan. Please contact at support@payright.com.au.</b><br/><br/><br/>";
-//            }
-
-            return $message;
+            // return message
+            return "<b>Your Plan " . $payrightPlanName . " has been activated.</b><br/><br/><br/><br/>";
         }
     }
 }

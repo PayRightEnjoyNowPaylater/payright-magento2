@@ -12,6 +12,11 @@ use Payright\Payright\Helper\Data as Helper;
 
 ini_set("display_errors", "0");
 
+/**
+ * Class ProductList
+ *
+ * @package Payright\Payright\Plugin
+ */
 class ProductList {
     protected $product;
     protected $payrightConfig;
@@ -24,7 +29,19 @@ class ProductList {
     protected $jsonHelper;
     protected $_canCallTransactionOverview = false;
 
-
+    /**
+     * ProductList constructor.
+     *
+     * @param  \Magento\Framework\View\Element\Template\Context  $context
+     * @param  \Magento\Catalog\Model\Product  $product
+     * @param  \Payright\Payright\Model\Config\Payright  $payrightConfig
+     * @param  \Payright\Payright\Helper\Data  $payrightHelper
+     * @param  \Magento\Catalog\Model\Session  $catalogSession
+     * @param  \Magento\Framework\Session\SessionManagerInterface  $session
+     * @param  \Magento\Framework\Registry  $registry
+     * @param  \Magento\Framework\Json\Helper\Data  $jsonHelper
+     * @param  \Magento\Framework\App\Config\ScopeConfigInterface  $scopeConfig
+     */
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         Product $product,
@@ -46,6 +63,13 @@ class ProductList {
         $this->scopeConfig = $scopeConfig;
     }
 
+    /**
+     * Get product details, for HTML render.
+     *
+     * @param  \Magento\Catalog\Block\Product\ListProduct  $subject
+     * @param  \Closure  $proceed
+     * @param  \Magento\Catalog\Model\Product  $product
+     */
     public function aroundGetProductDetailsHtml(
         \Magento\Catalog\Block\Product\ListProduct $subject,
         \Closure $proceed,
@@ -65,6 +89,12 @@ class ProductList {
         }
     }
 
+    /**
+     * Get price.
+     *
+     * @param $finalPrice
+     * @return string
+     */
     public function getPrice($finalPrice) {
         $this->session->start();
         $result = $this->payrightHelper->calculateSingleProductInstallment($finalPrice);
@@ -73,7 +103,7 @@ class ProductList {
             $resultString = "<div class='installments' style='padding: 10px;
          margin-bottom: 10px;'>or <strong>" . $result['numberOfRepayments'] . "</strong>" . " Fortnightly " . "payments of $" . "<strong>" . $result['loanAmountPerPayment'] . "</strong> with <span class='payright-logo'></span> 
 
-         <img id='prlogo' >";
+         <img id='payright-logo' >";
 
             return $resultString;
         } else {
@@ -84,6 +114,12 @@ class ProductList {
         }
     }
 
+    /**
+     * Get configuration field, by global use.
+     *
+     * @param $field
+     * @return mixed
+     */
     public function getConfigValue($field) {
         return $this->scopeConfig->getValue('payment/payright/' . $field);
     }

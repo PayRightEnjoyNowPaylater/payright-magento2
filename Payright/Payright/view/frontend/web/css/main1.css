@@ -1,37 +1,10 @@
 
-h1.payRightH1, h2.payRightH2, h3.payRightH3, h4.payRightH4, h5.payRightH5, h6.payRightH6, p.payRightPayment {
+h1.payrightH1, h2.payright-h2, h3.payrightH3, h4.payright-h4, h5.payright-h5, h6.payrightH6, p.payright-payment {
     font-family: 'Roboto', sans-serif;
     color: #275f95;
 }
 
-/*
-@media screen and (max-width: 780px) {
-	.circleArrow h2.payRightH2 span.installments {
-
-	font-size: 20px;
-	/*font-weight: 700;
-	/*line-height: 30px;*/
-/*	}
-	h2.payRightH2{
-		font-size:12px;
-
-	}
-}
-@media screen and (min-width: 990px) {
-	.circleArrow h2.payRightH2 span.installments {
-		
-		font-weight: 700;
-		line-height: 30px;
-	}
-
-	/*.circleArrow *//*h2.payRightH2{
-		font-size:12px;
-
-	}
-}*/
-
-
-h1.payRightH1 {
+h1.payrightH1 {
     font-size: 54px;
     line-height: 60px;
     text-transform: uppercase;
@@ -39,63 +12,58 @@ h1.payRightH1 {
     color: #4e84b5;
 }
 
-h2.payRightH2 {
+h2.payright-h2 {
     font-size: 20px;
-    margin: 0px; /*25px 0 35px;*/
+    margin: 0; /* 25px 0 35px; */
     text-align: center;
     font-weight: 500;
-
 }
 
-/*new*/
 header {
     padding: 40px 0;
 }
 
-#merchantname {
+#payright-merchant-name {
     text-align: right;
-
 }
 
-#payrightmargin {
+.payright-margin {
     text-align: left;
-    padding-top: 0px;
+    padding-top: 0;
     padding-bottom: 10px;
-
 }
 
-#payrightdeposit {
+.payright-deposit {
     text-align: left;
     line-height: 27px;
 }
 
-.payRight_columns.installments {
-    margin-left: 0px;
+.payright-columns.installments {
+    margin-left: 0;
 }
 
 h2.modal {
     font-size: 20px;
-    margin: 0px; /*25px 0 35px;*/
+    margin: 0;
     text-align: center;
     font-weight: 500;
-
 }
 
-h4.payRightH4 {
+h4.payright-h4 {
     font-size: 22px;
     text-align: center;
 }
 
-h5.payRightH5 {
+h5.payright-h5 {
     font-weight: 900;
     font-size: 18px;
 }
 
-p.payRightPayment {
+p.payright-payment {
     font-size: 12px;
     text-align: center;
     color: #666;
-    margin-bottom: 0px;
+    margin-bottom: 0;
     margin-top: 0;
 }
 
@@ -113,23 +81,20 @@ button {
 }
 
 .circleArrow {
-    /*background: url('../../images/Circle-Arrowx.png');
+    /*
+    background: url('../../images/Circle-Arrowx.png');
     background-size: cover;
-    padding: 55px 0;*/
+    padding: 55px 0;
+    */
     text-align: center;
-
     position: relative;
     cursor: pointer;
-    padding-bottom: 0px;
-
-
+    padding-bottom: 0;
 }
 
-.circleArrow h2.payRightH2 {
+.circleArrow h2.payright-h2 {
     color: #fff;
-
-    line-height: 0px;
-
+    line-height: 0;
     display: inline-block;
     position: absolute;
     left: 50%;
@@ -137,45 +102,46 @@ button {
     transform: translate(-50%, -50%); /* tweak for precise centering; details:*/
 }
 
-.payRightimg {
+.payright-logo {
     width: 300px !important;
-    /*vertical-align: middle !important;
+    /*
+    vertical-align: middle !important;
     margin: -2px 0 0 .5em !important;
     padding: 0 !important;
     position: relative !important;
-    box-shadow: none !important;*/
+    box-shadow: none !important;
+    */
 }
 
-.circleArrow h2.payRightH2 span.installments {
-
+.circleArrow h2.payright-h2 span.installments {
     font-weight: 700;
     line-height: 30px;
 }
 
-
 span.installments {
-
     color: #fff;
 }
 
-/*header {
+/*
+header {
 	padding: 40px 0;
-}*/
+}
+*/
 
-.payRight_container {
+.payright-container {
     width: auto;
     margin: auto;
     background-color: white;
 }
 
-h4.payRightH4.op2 {
+h4.payright-h4.op2 {
     font-size: 22px;
     line-height: 22px;
     text-align: center;
     font-weight: 700;
 }
 
-p.payRightp {
+p.payright-paragraph {
     font-size: 18px;
     text-align: center;
     /*new*/
@@ -183,7 +149,7 @@ p.payRightp {
 }
 
 /*new*/
-button.payrightbutton {
+button.payright-button {
     background-color: #275f95;
     color: #ffffff;
     font-size: 28px;
@@ -197,7 +163,6 @@ button.payrightbutton {
     line-height: normal;
     font-weight: 700;
 }
-
 
 a {
     color: #275f95;
@@ -213,24 +178,25 @@ button {
     padding: 10px;
 }
 
-/*header {
+/*
+header {
 	padding: 40px 0;
-}*/
+}
+*/
 
-.bodybox {
-    margin: 0px;
+.body-container {
+    margin: 0;
 }
 
-.payRight_container_cart {
+.payright-container-cart {
     max-width: 600px;
     width: auto;
-    margin: auto;
-    margin-left: 0px;
-    padding: 0 0 22px 0px;
+    margin: auto auto auto 0;
+    padding: 0 0 22px 0;
     line-height: 27px;
 }
 
-.payRight_container {
+.payright-container {
     /*max-width:600px;*/
     width: auto;
     margin: auto;
@@ -249,7 +215,7 @@ button {
     text-align: left;
 }
 
-.numC {
+.payright-num-count {
     font-size: 30px;
     background-color: #ffffff;
     color: #275f95;
@@ -260,17 +226,17 @@ button {
     font-weight: bold;
 }
 
-.payRight_points p {
+.payright-points p {
     font-weight: 500;
     font-size: 22px;
     line-height: 28px;
 }
 
-.payRight_points {
+.payright-points {
     margin: 30px 0 30px 0 !important;
 }
 
-.pointsCenter {
+.payright-points-center {
     border-left: 2px solid #b2b3b6;
     border-right: 2px solid #b2b3b6;
 }
@@ -289,25 +255,25 @@ button {
 
 @media only screen and (max-width: 770px) {
 
-    .circleArrow h2.payRightH2 {
+    .circleArrow h2.payright-h2 {
         line-height: 15px;
         font-size: 15px;
     }
 
-    .circleArrow h2.payRightH2 span.installments {
+    .circleArrow h2.payright-h2 span.installments {
 
         font-weight: 700;
         line-height: 30px;
         font-size: 40px;
     }
 
-    h1.payRightH1 {
+    h1.payright-h1 {
         text-align: center;
         font-size: 36px;
 
     }
 
-    h2.payRightH2 {
+    h2.payright-h2 {
         text-align: center;
         font-size: 20px;
         line-height: 20px;
@@ -315,19 +281,18 @@ button {
         padding-top: 20px;
     }
 
-    h2.payRightH2.modal {
+    h2.payright-h2.modal {
         text-align: center;
         font-size: 20px;
         padding-bottom: 20px;
 
     }
 
-
-    p.payRightPayment {
+    p.payright-payment {
         font-size: 12px;
         line-height: 18px;
-        margin-top: 0px;
-        margin-bottom: 0px;
+        margin-top: 0;
+        margin-bottom: 0;
     }
 
     br {
@@ -338,21 +303,21 @@ button {
         font-size: 22px;
     }
 
-    .imgCol {
+    .payright-image-col {
         text-align: center;
     }
 
-    .imgCol img {
+    .payright-image-col img {
         width: 40%;
     }
 
-    .PointsInBlueStrip {
+    .payright-points-in-blue-strip {
         padding-left: 15%;
     }
 
-    .pointsCenter {
-        border-left: 0px solid #b2b3b6;
-        border-right: 0px solid #b2b3b6;
+    .payright-points-center {
+        border-left: 0 solid #b2b3b6;
+        border-right: 0 solid #b2b3b6;
         border-top: 2px solid #b2b3b6;
         border-bottom: 2px solid #b2b3b6;
     }
@@ -362,46 +327,43 @@ button {
         line-height: 18px;
     }
 
-    #merchantname {
+    #payright-merchant-name {
         text-align: center;
     }
 
 }
 
 @media only screen and (min-width: 771px) {
-    .bodybox {
+    .body-container {
         padding: 0 40px 0 40px;
     }
 
-    h2.payRightH2 {
+    h2.payright-h2 {
         text-align: center;
-        padding-bottom: 0px;
         padding-bottom: 20px;
         padding-top: 20px;
     }
 
-    h2.payRightH2.hpw {
+    h2.payright-h2.hpw {
         padding-bottom: 20px;
-        /*new*/
         font-size: 32px;
         margin: 25px 0 35px;
         text-align: center;
     }
 
-    .circleArrow h2.payRightH2 span.installments {
-
+    .circleArrow h2.payright-h2 span.installments {
         font-weight: 700;
-        line-height: 0px;
+        line-height: 0;
         font-size: 24px;
     }
 
-    .circleArrow h2.payRightH2 {
+    .circleArrow h2.payright-h2 {
         line-height: 20px;
         font-size: 16px;
         transform: translate(-50%, -34%);
     }
 
-    h2.payRightH2.modal {
+    h2.payright-h2.modal {
         text-align: center;
         font-size: 20px;
         padding-bottom: 20px;
@@ -412,73 +374,70 @@ button {
 
 @media screen and (max-width: 768px) {
 
-    img.payRightimg {
+    img.payright-logo {
         height: auto;
         max-width: 25%;
     }
 
 }
 
-a.tellmemore {
+a.payright-tell-me-more {
     color: white;
     text-decoration-line: none;
 }
 
-
-/*from main2 */
-
-.payRight_blueStrip2 {
+.payright-blue-strip-2 {
     background-color: #275f95;
     padding-bottom: 30px;
 }
 
-.payRight_blueStrip2 h2, .payRight_blueStrip2 p {
+.payright-blue-strip-2 h2, .payright-blue-strip-2 p {
     color: #ffffff;
 }
 
-.payRight_blueStrip2 p {
+.payright-blue-strip-2 p {
     text-align: center !important;
     font-weight: 300;
     font-size: 22px;
 }
 
-.payRight_blueStrip2 .insideColumns {
+.payright-blue-strip-2 .insideColumns {
     text-align: center !important;
     padding-bottom: 30px;
 }
 
-.payRight_blueStrip2 {
+.payright-blue-strip-2 {
     margin-bottom: 0;
     padding-bottom: 0;
 }
 
-.payRight_blueStrip2 img {
+.payright-blue-strip-2 img {
     text-align: center;
     width: 50%;
     margin-bottom: 14px;
 }
 
-.payRight_blueStrip2 .payRight_topleft2 {
+.payright-blue-strip-2 .payright-top-left-2 {
     border-right: 1px solid #fff;
     border-bottom: 1px solid #fff;
 }
 
-.payRight_blueStrip2 .payRight_bottomright2 {
+.payright-blue-strip-2 .payright-bottom-right-2 {
     border-left: 1px solid #fff;
     border-top: 1px solid #fff;
     margin-top: -1px;
 }
 
-.payRight_blueStripBottom2 {
+.payright-blue-strip-bottom-2 {
     margin-bottom: 30px !important;
     padding: 0 80px 30px 80px;
 }
 
-.payRight_blueStripTop2 {
-    padding: 30px 80px 0px 80px;
+.payright-blue-strip-top-2 {
+    padding: 30px 80px 0 80px;
 }
 
-.numC {
+.payright-num-count {
     font-size: 30px;
     background-color: #ffffff;
     color: #275f95;
@@ -489,25 +448,31 @@ a.tellmemore {
     font-weight: bold;
 }
 
-/*.payRight_points p {
+/*
+.payright-points p {
 	font-weight: 900;
 	font-size: 22px;
 	line-height: 28px;
-}*/
-/*.payRight_points {
+}
+*/
+/*
+.payright-points {
 	margin: 30px 0 30px 0 !important;
-}*/
-/*.pointsCenter {
+}
+*/
+/*
+.payright-points-center {
 	border-left: 2px solid #b2b3b6;
 	border-right: 2px solid #b2b3b6;
 }
 */
-.info2 {
+
+.payright-info-2 {
     background-color: #b2b3b6;
     margin-bottom: 30px !important;
 }
 
-.info2 p {
+.payright-info-2 p {
     color: #ffffff;
     text-align: left;
     font-size: 16px;
@@ -516,7 +481,7 @@ a.tellmemore {
 @media only screen and (max-width: 770px) {
 
     .headerLast {
-        height: 0px;
+        height: 0;
     }
 
     .imgPayRight {
@@ -527,68 +492,42 @@ a.tellmemore {
         width: 60%;
     }
 
-    .payRight_blueStrip2 img {
+    .payright-blue-strip-2 img {
         width: 80%;
     }
 
-    .payRight_blueStrip2 .payRight_topleft2 {
-        border-right: 0px solid #fff;
-        border-bottom: 0px solid #fff;
+    .payright-blue-strip-2 .payright-top-left-2 {
+        border-right: 0 solid #fff;
+        border-bottom: 0 solid #fff;
     }
 
-    .payRight_blueStrip2 .payRight_bottomright2 {
-        border-left: 0px solid #fff;
-        border-top: 0px solid #fff;
-        margin-top: 0px;
+    .payright-blue-strip-2 .payright-bottom-right-2 {
+        border-left: 0 solid #fff;
+        border-top: 0 solid #fff;
+        margin-top: 0;
     }
 
-    .payRight_blueStripBottom2 {
+    .payright-blue-strip-bottom-2 {
         margin-bottom: 30px !important;
         padding: 0 30px 30px 30px;
     }
 
-    .payRight_blueStripTop2 {
-        padding: 30px 30px 0px 30px;
+    .payright-blue-strip-top-2 {
+        padding: 30px 30px 0 30px;
     }
 
-    .payRight_blueStrip2 .insideColumns {
+    .payright-blue-strip-2 .insideColumns {
         border-bottom: 1px solid #ffffff;
     }
 
-    .payRight_blueStrip2 .payRight_bottomright2 {
-        border-bottom: 0px solid #fff;
+    .payright-blue-strip-2 .payright-bottom-right-2 {
+        border-bottom: 0 solid #fff;
     }
 
-    .info2 p {
+    .payright-info-2 p {
         font-size: 12px !important;
         line-height: 14px;
     }
 
 }
-
-
-/*img.circleArrow  {
-		width: 300px;
-	}*/
-/*#payrightmargin{
-    margin-top: -40px;
-}
-*/
-/*#payrightdeposit{
-    margin-top:0;
-}
-}*/
-
-/*@media only screen and (max-width: 715px) {
-	.insideColumns {
-		display: none;	
-	}*/
-
-/*@media screen and (min-width: 769px), print{
-
-}*/
-/*h2.circleArrow h2.payRightH2.payrightH2{
-
-	font-size:32px;
-}*/
 

@@ -1,170 +1,11 @@
-/*@import url("https://fonts.googleapis.com/css?family=Quicksand:700|Roboto:400,700");
-.modal-popup.payright.modal-slide .modal-content {
-  padding: 0; }
-
-html {
-  height: 100%; }
-
-body {
-  min-height: 100%; }
-
-.modal-slide .action-close {
-  float: right;
-  display: block;
-  width: 40px;
-  height: 40px;
-  margin: 15px;
-  line-height: 40px;
-  text-align: center; }
-  .modal-slide .action-close:before {
-    vertical-align: middle; }
-
-#PayrightHowitWorksmodalPopup {
-  background-color: #FFF;
-  color: #251450;
-  font-family: 'Roboto', sans-serif;
-  font-weight: 400;
-  text-align: center;
-  padding: 2rem; }
-  #PayrightHowitWorksmodalPopup * {
-    box-sizing: border-box; }
-  #PayrightHowitWorksmodalPopup header {
-    display: flex;
-    justify-content: center; }
-  #PayrightHowitWorksmodalPopup h1, #PayrightHowitWorksmodalPopup h2, #PayrightHowitWorksmodalPopup .text-big .tellmemore {
-    font-family: 'Quicksand', sans-serif;
-    font-weight: 700;
-    letter-spacing: -0.03em; }
-  #PayrightHowitWorksmodalPopup h1, #PayrightHowitWorksmodalPopup .text-big {
-    color: #524fa1;
-    font-size: 20.8px;
-    line-height: 24px;
-    letter-spacing: -0.03em;
-    margin-bottom: 1.5rem; }
-  #PayrightHowitWorksmodalPopup h1 {
-    margin-bottom: 3rem; }
-  #PayrightHowitWorksmodalPopup .icon-container {
-    margin: 0 auto 3rem;
-    padding: 0;
-    position: relative;
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    max-width: 700px; }
-    #PayrightHowitWorksmodalPopup .icon-container:before, #PayrightHowitWorksmodalPopup .icon-container:after {
-      display: none;
-      content: '';
-      background-color: #eff1f6;
-      position: absolute;
-      border-radius: 3px; }
-    #PayrightHowitWorksmodalPopup .icon-container:before {
-      top: calc(50% - 5px);
-      height: 10px;
-      left: 0;
-      right: 0;
-      width: 100%;
-      z-index: 0; }
-    #PayrightHowitWorksmodalPopup .icon-container:after {
-      left: calc(50% - 5px);
-      width: 10px;
-      top: 0;
-      bottom: 0;
-      height: 100%;
-      z-index: 0; }
-    #PayrightHowitWorksmodalPopup .icon-container > li {
-      display: flex;
-      justify-content: left;
-      align-items: center;
-      flex-basis: 100%;
-      padding: 2rem;
-      margin: 0; }
-      #PayrightHowitWorksmodalPopup .icon-container > li .icon {
-        flex-basis: 25%;
-        text-align: right;
-        padding: 1rem; }
-      #PayrightHowitWorksmodalPopup .icon-container > li .number-text {
-        width: 250px;
-        display: flex;
-        align-items: flex-start; }
-      #PayrightHowitWorksmodalPopup .icon-container > li .number {
-        flex-basis: 20px;
-        text-align: right;
-        padding: 1rem 0.5rem;
-        align-self: flex-start; }
-      #PayrightHowitWorksmodalPopup .icon-container > li .text {
-        flex-grow: 1;
-        text-align: left;
-        padding: 1rem; }
-    @media (min-width: 768px) {
-      #PayrightHowitWorksmodalPopup .icon-container {
-        flex-direction: row; }
-        #PayrightHowitWorksmodalPopup .icon-container:before, #PayrightHowitWorksmodalPopup .icon-container:after {
-          display: block; }
-        #PayrightHowitWorksmodalPopup .icon-container li {
-          flex-basis: 50%;
-          max-width: 350px;
-          z-index: 1;
-          position: relative; }
-          #PayrightHowitWorksmodalPopup .icon-container li .number-text {
-            width: auto; } }
-  #PayrightHowitWorksmodalPopup .text-big {
-    margin-bottom: 3rem; }
-  #PayrightHowitWorksmodalPopup h2 {
-    color: #ee2657;
-    margin: 0 0 10px;
-    padding: 0;
-    font-size: 16px;
-    line-height: 12.8px; }
-  #PayrightHowitWorksmodalPopup .important-info {
-    margin: 0 auto 5rem;
-    max-width: 800px;
-    padding: 2rem 2.5rem;
-    border-radius: 1.5rem;
-    background-color: #eff1f6;
-    text-align: left; }
-    #PayrightHowitWorksmodalPopup .important-info p {
-      margin: 0;
-      padding: 0;
-      font-size: 12px;
-      line-height: 14.4px;
-      letter-spacing: -0.03em; }
-    #PayrightHowitWorksmodalPopup .important-info a {
-      color: #251450;
-      font-weight: 700;
-      text-decoration: underline; }
-      #PayrightHowitWorksmodalPopup .important-info a:hover {
-        text-decoration: none; }
-  #PayrightHowitWorksmodalPopup a.tellmemore {
-    background-color: #5431ff;
-    color: #FFF;
-    font-weight: 700;
-    text-decoration: none;
-    padding: 1rem 7rem;
-    border-radius: 20px;
-    font-size: 18px;
-    line-height: 32px;
-    letter-spacing: normal;
-    display: inline-block;
-    margin-bottom: 4rem; }
-    #PayrightHowitWorksmodalPopup a.tellmemore:hover {
-      text-decoration: none; }
-
-@media only screen and (max-width: 767px) {
-  .modal-popup.modal-slide {
-    left: auto; } }*/
-
 @import url("https://fonts.googleapis.com/css?family=Quicksand:700|Roboto:400,700");
 
 .modal-popup.payright.modal-slide .modal-content {
     padding: 0;
 }
 
-
-.payrightmodal {
-    padding-top: 0px;
+.payright-modal {
+    padding-top: 0
 }
 
 .modal-slide .action-close {
@@ -181,7 +22,7 @@ body {
     vertical-align: middle;
 }
 
-#PayrightHowitWorksmodalPopup {
+#payright-howitworks-modal {
     background-color: #FFF;
     color: #251450;
     font-family: 'Roboto', sans-serif;
@@ -191,69 +32,68 @@ body {
     padding: 1rem;
 }
 
-#PayrightHowitWorksmodalPopup * {
+#payright-howitworks-modal * {
     box-sizing: border-box;
 }
 
-#PayrightHowitWorksmodalPopup header {
+#payright-howitworks-modal header {
     display: flex;
     justify-content: center;
     padding: 1rem 0 2rem;
 }
 
-#PayrightHowitWorksmodalPopup header img {
+#payright-howitworks-modal header img {
     height: 55px;
 }
 
-#PayrightHowitWorksmodalPopup h1, #PayrightHowitWorksmodalPopup h2, #PayrightHowitWorksmodalPopup h3, #PayrightHowitWorksmodalPopup .text, #PayrightHowitWorksmodalPopup .tellmemore {
+#payright-howitworks-modal h1, #payright-howitworks-modal h2, #payright-howitworks-modal h3, #payright-howitworks-modal .text, #payright-howitworks-modal .payright-tell-me-more {
     font-family: 'Quicksand', sans-serif;
     font-weight: 700;
     letter-spacing: -0.03em;
 }
 
-#PayrightHowitWorksmodalPopup h1, #PayrightHowitWorksmodalPopup .text-big {
+#payright-howitworks-modal h1, #payright-howitworks-modal .text-big {
     color: #5431ff;
     font-size: 18px;
     line-height: 21px;
     margin-bottom: 1rem;
 }
 
-#PayrightHowitWorksmodalPopup h1 {
+#payright-howitworks-modal h1 {
     margin-bottom: 2rem;
 }
 
-#PayrightHowitWorksmodalPopup .icon-container {
+#payright-howitworks-modal .icon-container {
     background-color: #24004f;
     color: #FFF;
-    border-radius: 1rem;
-    border-bottom-left-radius: 0;
+    border-radius: 1rem 1rem 1rem 0;
     padding: 1rem;
     margin: 0 auto 2rem;
 }
 
-#PayrightHowitWorksmodalPopup .icon-container svg {
+#payright-howitworks-modal .icon-container svg {
     width: 40px;
     height: 40px;
     display: block;
 }
 
-#PayrightHowitWorksmodalPopup .icon-container.light {
+#payright-howitworks-modal .icon-container.light {
     background-color: #eff1f6;
     color: #24004f;
 }
 
-#PayrightHowitWorksmodalPopup .icon-container.light svg {
+#payright-howitworks-modal .icon-container.light svg {
     width: 60px;
     height: 60px;
     margin: 0 auto;
 }
 
-#PayrightHowitWorksmodalPopup .icon-container.light li .text {
+#payright-howitworks-modal .icon-container.light li .text {
     font-size: 15px;
     line-height: 18px;
 }
 
-#PayrightHowitWorksmodalPopup .icon-container ul {
+#payright-howitworks-modal .icon-container ul {
     margin: 0 auto;
     padding: 0;
     position: relative;
@@ -265,7 +105,7 @@ body {
     flex-wrap: wrap;
 }
 
-#PayrightHowitWorksmodalPopup .icon-container li {
+#payright-howitworks-modal .icon-container li {
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -275,12 +115,12 @@ body {
     margin: 0;
 }
 
-#PayrightHowitWorksmodalPopup .icon-container li .icon {
+#payright-howitworks-modal .icon-container li .icon {
     text-align: center;
     flex-grow: 0;
 }
 
-#PayrightHowitWorksmodalPopup .icon-container li .text {
+#payright-howitworks-modal .icon-container li .text {
     text-align: center;
     padding: 1rem 1rem 0;
     flex-grow: 1;
@@ -289,18 +129,18 @@ body {
 }
 
 @media (min-width: 825px) {
-    #PayrightHowitWorksmodalPopup .icon-container li {
+    #payright-howitworks-modal .icon-container li {
         flex-basis: 25%;
     }
 }
 
 @media (max-width: 1390px) {
-    #PayrightHowitWorksmodalPopup .icon-container br {
+    #payright-howitworks-modal .icon-container br {
         display: none;
     }
 }
 
-#PayrightHowitWorksmodalPopup h2 {
+#payright-howitworks-modal h2 {
     color: #FFF;
     margin: 0 0 8px;
     padding: 0;
@@ -308,20 +148,20 @@ body {
     line-height: 27px;
 }
 
-#PayrightHowitWorksmodalPopup h3 {
+#payright-howitworks-modal h3 {
     color: #24004f;
     font-size: 15px;
     line-height: 15px;
     margin: 0 0 0.5rem;
 }
 
-#PayrightHowitWorksmodalPopup .important-info {
+#payright-howitworks-modal .important-info {
     margin: 0 auto 3rem;
     max-width: 800px;
     text-align: center;
 }
 
-#PayrightHowitWorksmodalPopup .important-info p {
+#payright-howitworks-modal .important-info p {
     margin: 0;
     padding: 0;
     font-size: 12px;
@@ -329,17 +169,17 @@ body {
     letter-spacing: -0.03em;
 }
 
-#PayrightHowitWorksmodalPopup .important-info a {
+#payright-howitworks-modal .important-info a {
     color: #251450;
     font-weight: 700;
     text-decoration: underline;
 }
 
-#PayrightHowitWorksmodalPopup .important-info a:hover {
+#payright-howitworks-modal .important-info a:hover {
     text-decoration: none;
 }
 
-#PayrightHowitWorksmodalPopup a.tellmemore {
+#payright-howitworks-modal a.payright-tell-me-more {
     background-color: #5431ff;
     color: #FFF;
     font-weight: 700;
@@ -353,7 +193,7 @@ body {
     margin-bottom: 2rem;
 }
 
-#PayrightHowitWorksmodalPopup a.tellmemore:hover {
+#payright-howitworks-modal a.payright-tell-me-more:hover {
     text-decoration: none;
 }
 

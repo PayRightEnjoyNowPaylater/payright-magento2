@@ -1,41 +1,53 @@
 # payright-magento2
-PayRight payment method plugin for Magento v2.x, follow the steps below for 
-configuration setup and installation.
+The Payright plugin for Magento v2.x.x platform.
 
-> 26th February 2021
-> 
-> This plugin is yet 'optimized' for `composer` standards. Hence, the:
-> 1. Missing `composer.json` file.
-> 1. The plugin folder structure will be changed. From `Payright/Payright/...` to `payright-magento2/...`.
-> 
-> Below installation instructions currently provide 'manual module installation steps', via copy/paste of files.
+Give your customers the option to pay in convenient zero-interest instalments.
 
-## 1.1 Installation
+Payright helps turn ‘too much’ into ‘too easy’ by spreading the cost of purchases over time. The "Payright" plugin provides the option to choose Payright as the payment method at the checkout.
+
+It also provides the functionality to display the Payright logo and instalment calculations below product prices on category pages, individual product pages, home pages and on the checkout page. For each payment that is approved by Payright, an order will be created inside the Magento 2 platform like any other order. Payright plans will activate once a product is shipped.
+
+## Installation
 This section outlines the steps to install the Payright plugin for the first time.
 
->  [MAGENTO] refers to the installed Magento file directory. Such as `/var/www/magento1.9`
+Please follow the steps below for installation and configuration setup.
 
-#### Requirements
-+ Access Token - A 'sandbox access token', or 'production access token'.
+>  [MAGENTO] refers to the installed Magento file directory. For example, `/var/www/magento2`.
 
-#### How to install
+### Requirements
++ Access Token - A 'sandbox access token', or 'production access token'. A 'required' field.
+
+> Create a Payright Developer account at Payright Developer Portal (https://developers.payright.com.au).
+> Enter e-mail address to sign up. Use the received sign-in e-mail, with unique login link to authenticate.
+
+### How to install
 
 1. Download the plugin (available as a .zip or tar.gz file).
 2. Unzip the file.
 3. Copy the 'Payright' folder to `[MAGENTO]/app/code/`.
 4. Open your command-line interface (CLI).
 5. In command-line interface (CLI), run the below command(s) to install & enable the Payright module:  
-    ``` 
-    php bin/magento module:enable Payright_Payright
+    ```
+    php bin/magento cache:disable
     php bin/magento setup:upgrade
     php bin/magento setup:static-content:deploy
-     
-    php bin/magento cache:clear
+    php bin/magento cache:enable
     ```
    
-### 1.2	Payright Plugin 
+> Tip: If `php bin/magento cache:clear` is causing issues, "disable cache" first then "re-enable cache" 
+> at the end of CLI installation/update of modules.
+> 
+> For example:
+> ``` 
+> php bin/magento cache:disable
+> php bin/magento setup:upgrade
+> php bin/magento setup:static-content:deploy
+> php bin/magento cache:enable
+> ```
 
-#### Primary Configuration
+## Payright Plugin 
+
+### Primary Configuration
 Complete the below steps to configure the merchant’s Payright merchant configuration settings in Magento Admin.
 
 1. Login to Magento Admin and navigate to **Stores** > **Configuration** > **Sales** > **Payment Methods** > **Payright**.
@@ -47,7 +59,7 @@ Complete the below steps to configure the merchant’s Payright merchant configu
    1. **Production Mode** for a live website and legitimate transactions.
 1. Save the configuration settings.
 
-#### Secondary Configurations
+### Optional Configurations
 
 1. Login to Magento Admin and navigate to **Stores** > **Configuration** > **Sales** > **Payment Methods** > **Payright**.
 1. Configure the display of the Payright installments details on Product Pages (individual product display pages).

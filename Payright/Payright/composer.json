@@ -1,0 +1,33 @@
+{
+  "name": "payright/payright",
+  "description": "The Payright module for Magento v2.x.x",
+  "version": "2.0.2",
+  "type": "magento2-module",
+  "license": "GPL-3.0",
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/PayRightEnjoyNowPaylater/payright-magento2"
+    }
+  ],
+  "authors": [
+    {
+      "name": "Brian Ng",
+      "email": "brian.ng@payright.com.au"
+    },
+    {
+      "name": "Payright Development Team",
+      "email": "devteam@payright.com.au"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {},
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "Payright\\Payright\\": ""
+    }
+  }
+}

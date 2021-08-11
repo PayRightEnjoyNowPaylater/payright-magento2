@@ -1,28 +1,26 @@
-#prlogo {
+#payright-logo {
     content: url('images/payrightlogo_rgb.png');
     max-height: 30px;
-    /*max-width: 40%;*/
+    /* max-width: 40%; */
     vertical-align: middle;
 }
 
-#payrightcheckout {
-    content: url('images/payrightlogo_rgb.png');
-
-}
-
-
-#adminpayright {
+#payright-checkout {
     content: url('images/payrightlogo_rgb.png');
 }
 
-.minicartpayright-text {
+
+#admin-payright {
+    content: url('images/payrightlogo_rgb.png');
+}
+
+.minicart-payright-text {
     padding-top: 5px;
-
 }
 
 span.payright-logo > img {
     content: url('images/payrightlogo_rgb.png');
     max-height: 30px;
-    /*max-width: 40%;*/
+    /* max-width: 40%; */
     vertical-align: middle;
 }

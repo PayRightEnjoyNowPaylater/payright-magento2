@@ -4,7 +4,7 @@
  * Magento 2 extensions for PayRight Payment
  *
  * @author PayRight
- * @copyright 2016-2018 PayRight https://www.payright.com.au
+ * @copyright 2016-2021 PayRight https://www.payright.com.au
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -12,7 +12,7 @@
     <type name="Magento\Checkout\Model\CompositeConfigProvider">
         <arguments>
             <argument name="configProviders" xsi:type="array">
-                <item name="afterpay" xsi:type="object">Payright\Payright\Model\ConfigProvider</item>
+                <item name="payright" xsi:type="object">Payright\Payright\Model\ConfigProvider</item>
             </argument>
         </arguments>
     </type>

@@ -6,6 +6,12 @@ use Payright\Payright\Helper\Data as Helper;
 use Payright\Payright\Model\Config\Payright as PayrightConfig;
 
 // ini_set("display_errors", "0");
+
+/**
+ * Class UpsellProducts
+ *
+ * @package Payright\Payright\Plugin
+ */
 class UpsellProducts {
     protected $product;
     protected $payrightConfig;
@@ -13,6 +19,14 @@ class UpsellProducts {
     protected $payrightHelper;
     protected $session;
 
+    /**
+     * UpsellProducts constructor.
+     *
+     * @param  \Payright\Payright\Model\Config\Payright  $payrightConfig
+     * @param  \Payright\Payright\Helper\Data  $payrightHelper
+     * @param  \Magento\Framework\App\Config\ScopeConfigInterface  $scopeConfig
+     * @param  \Magento\Framework\Session\SessionManagerInterface  $session
+     */
     public function __construct(
         PayrightConfig $payrightConfig,
         Helper $payrightHelper,
@@ -25,7 +39,15 @@ class UpsellProducts {
         $this->session = $session;
     }
 
-    public function aftergetProductPrice(
+    /**
+     * Get product price.
+     *
+     * @param  \Magento\Catalog\Block\Product\ProductList\Upsell  $subject
+     * @param $result
+     * @param  \Magento\Catalog\Model\Product  $product
+     * @return mixed|string
+     */
+    public function afterGetProductPrice(
         \Magento\Catalog\Block\Product\ProductList\Upsell $subject,
         $result,
         \Magento\Catalog\Model\Product $product
@@ -55,6 +77,12 @@ class UpsellProducts {
         }
     }
 
+    /**
+     * Get configuration field, by global use.
+     *
+     * @param $field
+     * @return mixed
+     */
     public function getConfigValue($field) {
         return $this->scopeConfig->getValue('payment/payright/' . $field);
     }

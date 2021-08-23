@@ -31,7 +31,6 @@ class OrderData implements \Magento\Framework\Event\ObserverInterface {
      * @param  \Magento\Framework\Session\SessionManagerInterface  $session
      * @param  \Payright\Payright\Helper\Data  $payrightHelper
      * @param  \Magento\Framework\App\Config\ScopeConfigInterface  $scopeConfig
-     * @param  \Payright\Payright\Model\Config\Payright  $payrightConfig
      */
     public function __construct(
         \Magento\Framework\HTTP\ZendClientFactory $httpClientFactory,
@@ -39,8 +38,7 @@ class OrderData implements \Magento\Framework\Event\ObserverInterface {
         PayrightConfig $payrightConfig,
         \Magento\Framework\Session\SessionManagerInterface $session,
         Helper $payrightHelper,
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
-        \Payright\Payright\Model\Config\Payright $payrightConfig
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
     ) {
         $this->payrightHelper = $payrightHelper;
         $this->_jsonHelper = $jsonHelper;

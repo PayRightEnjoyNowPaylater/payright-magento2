@@ -23,6 +23,8 @@ This is a `recommended` release to download and update your plugin version with.
 
 ## Added
 1. Feature: Added new plugin configuration "Display Term", to toggle between showing suggested "Weekly" or "Fortnightly" rates on Magento 2 store.
+## Fixed
+1. Fix: Added missing spacing between term and 'payments'.
 
 ## [2.0.2] - 2021-08-12
 This is a `recommended` release to download and update your plugin version with.

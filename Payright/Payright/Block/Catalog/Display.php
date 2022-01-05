@@ -66,7 +66,7 @@ class Display extends \Magento\Framework\View\Element\Template {
     /**
      * Get installment amount.
      *
-     * @return string|void
+     * @return array|string
      */
     public function getInstallmentsAmount() {
         if ($this->payrightConfig->isProductInstallmentsShow() == "1") {
@@ -97,15 +97,6 @@ class Display extends \Magento\Framework\View\Element\Template {
      */
     public function IsProductPageInstallmentTextActive() {
         return $this->payrightConfig->isProductInstallmentsShow();
-    }
-
-    /**
-     * Get product page installment text.
-     *
-     * @return mixed
-     */
-    public function getProductInstallmentText() {
-        return "test";
     }
 
     /**

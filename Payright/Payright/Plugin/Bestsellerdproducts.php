@@ -68,11 +68,11 @@ class Bestsellerdproducts {
 
             if ($resultNew != 'exceed_amount' && $resultNew != 'APIError' && ($this->getConfigValue('bestsellerinstalments') == "1")) {
                 $resultString = "<div class='installments' style='padding: 2px;
-         margin-bottom: 10px;'>or <strong>" . $resultNew['numberOfRepayments'] . "</strong>" . " Fortnightly " . "payments of $" . "<strong>" . $resultNew['loanAmountPerPayment'] . "</strong> with <span class='payright-logo'><img ></span></div>";
+         margin-bottom: 10px;'>or <strong> " . $resultNew['numberOfRepayments'] . " </strong>" . $resultNew['repaymentFrequency'] . "payments of $" . "<strong>" . $resultNew['loanAmountPerPayment'] . "</strong> with <span class='payright-logo'><img ></span></div>";
                 return $result . $resultString;
             } else {
                 if (($this->scopeConfig->getValue('payment/payright/sandbox')) == 1) {
-                    $resultString = "<div class='installments' style='padding: 2px; margin-bottom: 10px;'>There is some problem with API!!</div>";
+                    $resultString = "<div class='installments' style='padding: 2px; margin-bottom: 10px;'>There are issues fetching your rates. Please review your Developer Portal.</div>";
                     return $result . $resultString;
                 } else {
                     return $result;

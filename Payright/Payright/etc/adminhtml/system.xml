@@ -14,8 +14,8 @@
                 <label>Payright</label>
                 <comment>
                     <![CDATA[<strong><img id="admin-payright"/>
-                    <p>Enjoy now, pay later! <a href="https://merchant.payright.com.au/" target="_blank">Register here</a></p>
-                    <p>Register at Payright Developer Portal, <a href="https://developers.payright.com.au/" target="_blank">click here</a></p>]]>
+                    <p>Login into the Merchant Portal, <a href="https://merchant.payright.com.au/" target="_blank">click here</a>.</p>
+                    <p>Register at Developer Portal, <a href="https://developers.payright.com.au/" target="_blank">click here</a>.</p>]]>
                 </comment>
                 <field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1"
                        showInStore="0">
@@ -26,6 +26,11 @@
                        showInStore="0">
                     <label>Sandbox</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="displayterm" translate="label" type="select" sortOrder="9" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>Display Term</label>
+                    <source_model>Payright\Payright\Model\Config\Source\Displayterm</source_model>
                 </field>
                 <field id="title" translate="label" type="text" sortOrder="7" showInDefault="1" showInWebsite="1"
                        showInStore="1">

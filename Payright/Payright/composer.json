@@ -1,7 +1,7 @@
 {
   "name": "payright/payright",
   "description": "The Payright module for Magento v2.x.x",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "type": "magento2-module",
   "license": "GPL-3.0",
   "repositories": [

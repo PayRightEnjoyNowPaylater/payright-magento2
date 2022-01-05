@@ -18,15 +18,11 @@ Please see README.md, for minimum WordPress & WooCommerce platform versions.
 <p>PHP: ^7.2</p>
 <p>Magento: ~2.0.0 | ~2.1.0 | ~2.2.0 | ~2.3.5</p>
 
-## [2.0.3] - 2021-NN-NN
-This is a `optional` release to download and update your plugin version with.
+## [2.0.3] - 2022-01-06
+This is a `recommended` release to download and update your plugin version with.
 
 ## Added
-1. N/A
-## Changed
-1. N/A
-## Fixed
-1. N/A
+1. Feature: Added new plugin configuration "Display Term", to toggle between showing suggested "Weekly" or "Fortnightly" rates on Magento 2 store.
 
 ## [2.0.2] - 2021-08-12
 This is a `recommended` release to download and update your plugin version with.
